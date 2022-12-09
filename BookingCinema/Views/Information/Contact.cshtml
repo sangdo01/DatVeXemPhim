@@ -1,0 +1,72 @@
+﻿
+@{
+    ViewBag.Title = "Contact";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link rel="stylesheet" type="text/css" href="~/template/client/assets/css/contact_us.css">
+<link rel="stylesheet" type="text/css" href="~/template/client/assets/css/style-starter.css">
+
+<div class="container" style="margin-top: 84px">
+    <h4>Contact Us</h4>
+    <h3>ĐỂ LẠI LỜI NHẮN</h3>
+    <p>
+        Nếu bạn có câu hỏi liên quan đến dịch vụ của chúng tôi, vui lòng liên hệ với chúng tôi bằng cách sử dụng mẫu dưới đây
+    </p>
+
+    <form name="contact-us-form" action="/Information/Contact" method="post" onsubmit="return validateForm()">
+        @Html.AntiForgeryToken()
+        <div class="row100" id="fname-row100">
+            <div class="col">
+                <div class="inputBox" id="fname-inputBox">
+                    <input type="text" name="ho_ten" @*id="ho_ten"*@ onclick="triggerAnim('fname')" />
+                    <span class="text">Tên</span>
+                    <span class="line" id="fname-line"></span>
+                </div>
+            </div>
+            <div class="col">
+                <div class="inputBox" id="email-inputBox">
+                    <input type="email" name="email" onclick="triggerAnim('email')" />
+                    <span class="text">Email</span>
+                    <span class="line" id="email-line"></span>
+                </div>
+            </div>
+        </div>
+        <div class="row100" id="email-row100">
+            
+            <div class="col">
+                <div class="inputBox" id="tel-inputBox">
+                    <input type="text" name="tieu_de" @*id="tieu_de"*@ onclick="triggerAnim('tel')" />
+                    <span class="text">Tiêu đề</span>
+                    <span class="line" id="tel-line"></span>
+                </div>
+            </div>
+        </div>
+        <div class="row100">
+            <div class="col">
+                <div class="inputBox textarea">
+                    <textarea name="noi_dung" @*id=" noi_dung"*@></textarea>
+                    <span class="text">Nhập nội dung bạn muốn liên hệ tại đây...</span>
+                    <span class="line"></span>
+                </div>
+            </div>
+        </div>
+        <div class="row100">
+            <div class="col">
+                <div class="submitbutton">
+                    <button class="btn submitbtn" type="submit">Gửi</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+
+ @*disable body scroll which navbar is in active*@ 
+<script>
+    $(function () {
+        $('.navbar-toggler').click(function () {
+            $('body').toggleClass('noscroll');
+        })
+    });
+</script>

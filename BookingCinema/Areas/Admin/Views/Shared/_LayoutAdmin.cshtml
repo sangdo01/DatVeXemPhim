@@ -1,0 +1,297 @@
+﻿
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>SL Cinema Admin| @ViewBag.Title</title>
+    <!-- plugins:css -->
+    <link rel="stylesheet" href="~/template/admin/assets/vendors/mdi/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="~/template/admin/assets/vendors/css/vendor.bundle.base.css">
+    <!-- endinject -->
+    <!-- Plugin css for this page -->
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <!-- endinject -->
+    <!-- Layout styles -->
+    <link rel="stylesheet" href="~/template/admin/assets/css/style.css">
+    <!-- End layout styles -->
+    <link rel="shortcut icon" href="~/template/admin/assets/images/favicon.ico" />
+    <!-- status -->
+    @*<link href="~/template/admin/status/css/style.css" rel="stylesheet" />*@
+    <link href="~/template/admin/status/css/sweetalert2.min.css" rel="stylesheet" />
+    <link href="~/template/admin/status/css/toastr.min.css" rel="stylesheet" />
+    <!-- toast -->
+    <link href="~/Content/toastr.css" rel="stylesheet" />
+    <link href="~/Content/toastr.min.css" rel="stylesheet" />
+    <!-- menu trang -->
+    <link href="~/Content/meuTrang.css" rel="stylesheet" />
+    <!-- the loai phim edit -->
+    <link href="~/Content/theloaiphim.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container-scroller">
+        <div class="row p-0 m-0 proBanner" id="proBanner">
+
+        </div>
+        <!-- partial:partials/_navbar.html -->
+        <nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+            <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
+                <a class="navbar-brand brand-logo" href="index.html"><span>SL Cinema</span></a>
+                <a class="navbar-brand brand-logo-mini" href="index.html"><img src="~/template/admin/assets/images/logo-mini.svg" alt="logo" /></a>
+            </div>
+            <div class="navbar-menu-wrapper d-flex align-items-stretch">
+                <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
+                    <span class="mdi mdi-menu"></span>
+                </button>
+                @*<div class="search-field d-none d-md-block">
+                    <form class="d-flex align-items-center h-100" action="#">
+                        <div class="input-group">
+                            <div class="input-group-prepend bg-transparent">
+                                <i class="input-group-text border-0 mdi mdi-magnify"></i>
+                            </div>
+                            <input type="text" class="form-control bg-transparent border-0" placeholder="Search projects">
+                        </div>
+                    </form>
+                </div>*@
+                <ul class="navbar-nav navbar-nav-right">
+                    <li class="nav-item nav-profile dropdown">
+                        <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false">
+                            <div class="nav-profile-img">
+
+                                <span class="availability-status online"></span>
+                            </div>
+                            @if (Session["Hoten"] != null)
+                            {
+                                <div class="nav-profile-text">
+                                    <p class="mb-1 text-black" style="font-size: 23px">@Session["Hoten"].ToString()</p>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="nav-profile-text">
+                                    <p class="mb-1 text-black">Admin</p>
+                                </div>
+                            }
+
+                        </a>
+                        <div class="dropdown-menu navbar-dropdown" aria-labelledby="profileDropdown">
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="@Url.Action("Logout", "Auth")">
+                                <i class="mdi mdi-logout me-2 text-primary"></i> Signout
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+                <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+                    <span class="mdi mdi-menu"></span>
+                </button>
+            </div>
+        </nav>
+
+        @{ var role = Convert.ToInt16(Session["Role"]);}
+
+        <!-- partial -->
+        <div class="container-fluid page-body-wrapper">
+            <!-- partial:partials/_sidebar.html -->
+            <nav class="sidebar sidebar-offcanvas" id="sidebar">
+                <ul class="nav">
+                    @*<li class="nav-item nav-profile">
+            <a href="#" class="nav-link">
+
+                <div class="nav-profile-text d-flex flex-column">
+                    <span class="font-weight-bold mb-2">David Grey. H</span>
+                    <span class="text-secondary text-small">Project Manager</span>
+                </div>
+                <i class="mdi mdi-bookmark-check text-success nav-profile-badge"></i>
+            </a>
+        </li>*@
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("Index", "Admin")">
+                            <span class="menu-title">Home</span>
+                            <i class="mdi mdi-home menu-icon"></i>
+                        </a>
+                    </li>
+                    @if (role == 1)
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html">
+                                <span class="menu-title">Doanh Thu</span>
+                                <i class="mdi mdi-home menu-icon"></i>
+                            </a>
+                        </li>
+                    }
+                    @if (role == 1)
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+                                <span class="menu-title">Phim</span>
+                                <i class="menu-arrow"></i>
+                                <i class="mdi mdi-crosshairs-gps menu-icon"></i>
+                            </a>
+                            <div class="collapse" id="ui-basic">
+                                <ul class="nav flex-column sub-menu" aria-expanded="false">
+                                    <li class="nav-item"> <a class="nav-link" href="@Url.Action("ListMovie", "Movie")">Danh sách phim</a></li>
+                                    <li class="nav-item"> <a class="nav-link" href="@Url.Action("ListCategory", "Movie")">Danh sách thể loại</a></li>
+                                    @*<li class="nav-item"> <a class="nav-link" href="#">Danh sách bình luận phim</a></li>*@
+                                </ul>
+                            </div>
+                        </li>
+                    }
+                    @if (role == 1)
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+                                <span class="menu-title">Rạp Chiếu/ Suất Chiếu</span>
+                                <i class="menu-arrow"></i>
+                                <i class="mdi mdi-crosshairs-gps menu-icon"></i>
+                            </a>
+                            <div class="collapse" id="ui-basic">
+                                <ul class="nav flex-column sub-menu">
+                                    <li class="nav-item"> <a class="nav-link" href="@Url.Action("ListCinema", "CinemaRoom")">Danh sách rạp chiếu</a></li>
+                                    <li class="nav-item"> <a class="nav-link" href="@Url.Action("ListCinemaRoom", "CinemaRoom")">Danh sách phòng</a></li>
+                                    <li class="nav-item"> <a class="nav-link" href="@Url.Action("ListShowTime", "ShowTime")">Danh sách suất chiếu</a></li>
+                                    <li class="nav-item"> <a class="nav-link" href="@Url.Action("ListKhungGio", "ShowTime")">Danh sách giờ chiếu</a></li>
+                                    <li class="nav-item"> <a class="nav-link" href="@Url.Action("ListSeatType", "CinemaRoom")">Danh sách loại ghế</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                    }
+                    
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+                            <span class="menu-title">Người Dùng</span>
+                            <i class="menu-arrow"></i>
+                            <i class="mdi mdi-crosshairs-gps menu-icon"></i>
+                        </a>
+                        <div class="collapse" id="ui-basic">
+                            <ul class="nav flex-column sub-menu">
+                                @if (role == 1)
+                                {
+                                    <li class="nav-item"> <a class="nav-link" href="#">Danh sách nhân viên</a></li>
+                                }
+                                <li class="nav-item"> <a class="nav-link" href="#">Danh sách người dùng</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    @if (role == 1)
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <span class="menu-title">Danh Sách Tin Tức</span>
+                            </a>
+                        </li>
+                    }
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <span class="menu-title">Danh Sách Liên Hệ</span>
+
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="pages/icons/mdi.html">
+                            <span class="menu-title">Danh Sách Vé Đặt</span>
+                            <i class="mdi mdi-contacts menu-icon"></i>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <!-- partial -->
+            @*<div class="main-panel">
+                <div class="content-wrapper">*@
+
+            <div style="display:none;">
+                <span id="Message" class="d-none">@TempData["Message"]</span>
+                <span id="Warning" class="d-none">@TempData["Warning"]</span>
+                <span id="Error" class="d-none">@TempData["Error"]</span>
+            </div>
+            @RenderBody()
+        </div>
+        <!-- content-wrapper ends -->
+        <!-- partial:partials/_footer.html -->
+        <footer class="footer">
+            <div class="container-fluid d-flex justify-content-between">
+                <span class="text-muted d-block text-center text-sm-start d-sm-inline-block">Admin Pages SL Cinema 2022 - 19DTHA1</span>
+            </div>
+        </footer>
+        <!-- partial -->
+        <!--</div>-->
+        <!-- main-panel ends -->
+        <!--</div>-->
+        <!-- page-body-wrapper ends -->
+    </div>
+
+    <!-- scripts -->
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+
+
+    <!-- container-scroller -->
+    <!-- plugins:js -->
+    <script src="~/template/admin/assets/vendors/js/vendor.bundle.base.js"></script>
+    <!-- endinject -->
+    <!-- Plugin js for this page -->
+    <script src="~/template/admin/assets/vendors/chart.js/Chart.min.js"></script>
+    <script src="~/template/admin/assets/js/jquery.cookie.js" type="text/javascript"></script>
+    <!-- End plugin js for this page -->
+    <!-- inject:js -->
+    <script src="~/template/admin/assets/js/off-canvas.js"></script>
+    <script src="~/template/admin/assets/js/hoverable-collapse.js"></script>
+    <script src="~/template/admin/assets/js/misc.js"></script>
+    <!-- endinject -->
+    <!-- Custom js for this page -->
+    <script src="~/template/admin/assets/js/dashboard.js"></script>
+    <script src="~/template/admin/assets/js/todolist.js"></script>
+    <!-- End custom js for this page -->
+    <!-- status -->
+    <script src="~/template/admin/status/js/toastr.min.js"></script>
+    <script src="~/template/admin/status/js/sweetalert2.min.js"></script>
+    <script src="~/template/admin/status/js/karma.laclac.min.js"></script>
+    <!-- toast -->
+    @*<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>*@
+    <script src="~/Scripts/toastr.js"></script>
+    <script src="~/Scripts/toastr.min.js"></script>
+    <script src="~/Scripts/Message.js"></script>
+    <!-- ckeditor -->
+    <script src="~/template/admin/ckeditor/ckeditor.js"></script>
+    <script type="text/javascript">
+        CKEDITOR.replace('chitietphim');
+    </script>
+    <!-- select 2 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js" integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" integrity="sha512-nMNlpuaDPrqlEls3IX/Q56H36qvBASwb3ipuo3MxeWbsQB1881ox0cRv7UPTgBlriqoynt35KjEwgGUeUXIPnw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    @*<script>
+            $(document).ready(function () {
+                $("#dao_dien_id").select2();
+                $("#dienvienarray").select2();
+                $("#theloaiarray").select2();
+                $("#id_content_rating").select2();
+                $("#role").select2();
+                $("#timeeframe").select2();
+                $("#phim_id").select2();
+                $("#phong_chieu_id").select2();
+                $("#cinema").select2();
+                $(".selectpc").select2();
+                $("#id_rapchieu").select2();
+                $("#gioi_tinh").select2();
+            });
+        </script>*@
+    <script>
+        $(document).ready(function () {
+            $("#theloaiarray").select2();
+            $("#rap_chieu_id").select2();
+            //$("#phong_chieu_id").select2();
+            //$("#cinema").select2();
+
+            $("#id_loai_ghe_edit").select2();
+        });
+    </script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>
+
+
+
+

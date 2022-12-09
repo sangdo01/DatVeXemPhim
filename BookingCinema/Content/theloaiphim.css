@@ -1,0 +1,9 @@
+﻿/*css tag a thead loai phim*/
+.cate-movie {
+    padding: 7px;
+    border: 1px solid #5958bc;
+    border-radius: 10px;
+    font-weight: 500;
+    color: #6067a2;
+    text-decoration: none;
+}

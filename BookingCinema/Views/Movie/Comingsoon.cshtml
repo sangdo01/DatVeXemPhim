@@ -1,0 +1,136 @@
+﻿@model PagedList.IPagedList<BookingCinema.Models.Phim>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "Sắp chiếu";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{ BookingCinema.Models.DatVeXemPhimDBContext db = new BookingCinema.Models.DatVeXemPhimDBContext();}
+<section class="w3l-albums py-5" id="projects">
+    <div class="container py-lg-4">
+        <div class="row">
+            <div class="col-lg-12 mx-auto" @*style="margin-top: 2%"*@>
+                <!--Horizontal Tab-->
+                <div id="parentHorizontalTab">
+                    @*<ul class="resp-tabs-list hor_1">
+                            <li><a href="#"></a>Tất cả</li>
+                            @foreach (var groupitem in db.CT_TheLoai.GroupBy(n => n.TheLoaiPhim))
+                            {
+                                if (groupitem.Key != null)
+                                {
+                                    <li><a href="#"></a>@groupitem.Key.ten_the_loai</li>
+                                }
+
+                            }
+                            <div class="clear"></div>
+                        </ul>*@
+
+
+
+                    <div class="resp-tabs-container hor_1">
+
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <h6 class="sub-title" style="font-size: 30px; margin-bottom: 15px; text-align: center; color: #df0e62">Thể Loại</h6>
+                                    <div class="form-group">
+                                        <a href="@Url.Action("ComingSoon", "Movie", new { page = 1})" class="list-group-item">Tất cả</a>
+                                        @foreach (var item in db.TheLoaiPhims)
+                                        {
+                                            if (ViewBag.category == item.id)
+                                            {
+                                                <a href="@Url.Action("ComingSoon", "Movie", new { page = 1})" class="list-group-item">@item.ten_the_loai</a>
+                                            }
+                                            else
+                                            {
+                                                <a href="@Url.Action("ComingSoon", "Movie", new { page = 1, category = item.id})" class="list-group-item">@item.ten_the_loai</a>
+                                            }
+                                        }
+                                    </div>
+
+                                </div>
+                                <div class="col-md-10">
+                                    <div class="albums-content">
+                                        <div class="row">
+                                            <!--/set1-->
+                                            @if (Model.Count == 0)
+                                            {
+                                                <h3 class="title" style=" overflow: hidden; text-align: center;padding:20px">
+                                                    Hiện thể loại này chưa có phim nào đang chiếu :(
+                                                </h3>
+                                            }
+                                            @foreach (var item in Model)
+                                            {
+                                                <div class="col-lg-4 new-relise-gd mt-lg-0 mt-0">
+                                                    <div class="slider-info">
+                                                        <div class="img-circle">
+                                                            <a href="@Url.Action("MovieDetail", "Movie", new { id = item.id})">
+                                                                <img src="~/images/movies/@item.anh" class="img-fluid"
+                                                                     alt="author image" style="height: 300px">
+
+                                                            </a>
+                                                        </div>
+                                                        <div class="message">
+                                                            <p> @Html.FormatValue(item.ngay_cong_chieu, "{0:dd/MM/yyyy}")</p>
+                                                            <a class="author-book-title" href="@Url.Action("MovieDetail", "Movie", new { id = item.id})"> @item.ten_phim</a>
+                                                            <h4>
+                                                                @if (@item.thoi_luong != null)
+                                                                {
+                                                                    <span class="post" style="width: 90px">
+                                                                        <span class="fa fa-clock-o"> </span>Thời lượng: @item.thoi_luong phút
+
+                                                                    </span>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <span class="post">
+                                                                        <span class="fa fa-clock-o"> </span>Thời lượng: Chưa xác định
+
+                                                                    </span>
+                                                                }
+
+                                                            </h4>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            }
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-sm-12 col-md-5">
+                <div>
+                    Trang @(Model.PageNumber>Model.PageCount?3:Model.PageNumber) /@Model.PageCount
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-7">
+                <div class="menuTrang">
+                    @if (Model.Count > 0)
+                    {
+                        @Html.PagedListPager(Model, page => Url.Action("ComingSoon", "Movie", new { page, category = ViewBag.category }), PagedListRenderOptions.OnlyShowFivePagesAtATime)
+                    }
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+</section>
+
+<style>
+    a:hover {
+        background-color: /*var(--theme-rose)*/ antiquewhite;
+    }
+</style>

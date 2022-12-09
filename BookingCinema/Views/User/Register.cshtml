@@ -1,0 +1,113 @@
+﻿@model BookingCinema.Models.KhachHang
+@{
+    ViewBag.Title = "Register";
+    Layout = "~/Views/Shared/_LayoutAccount.cshtml";
+}
+
+<div class="container_signup_signin" style="height: 1000px; padding-top: 20px" id="container_signup_signin">
+
+    <div class="form-container sign-up-container">
+        <form name="sign-up-form" style="color: var(--theme-title);" action="/User/Register" method="post"
+              onsubmit="return signUpValidateForm()">
+            @Html.AntiForgeryToken()
+            <h1>Đăng Ký</h1>
+            <div class="social-container">
+                <a href="#" class="social" style="color: var(--theme-title);"><i class="fab fa-facebook-f"></i></a>
+            </div>
+            <span>hoặc sử dụng email của bạn</span>
+
+            <div class="form-group">
+                <input name="username" type="tel" id="username" placeholder="Nhập username" class="border border-dark" />
+                @Html.ValidationMessageFor(m => m.username, "", new { @class = "badge badge-danger" })
+            </div>
+
+            <div class="form-group">
+                <input name="ho_ten" id="ho_ten" type="text" placeholder="Họ tên" class="border border-dark" />
+                @Html.ValidationMessageFor(m => m.ho_ten, "", new { @class = "badge badge-danger" })
+            </div>
+            <div class="form-group">
+                <input name="dia_chi" id="dia_chi" type="text" placeholder="Nhập địa chỉ" class="border border-dark" />
+                @Html.ValidationMessageFor(m => m.dia_chi, "", new { @class = "badge badge-danger" })
+            </div>
+            <div class="form-group">
+                <input name="sdt" type="tel" id="sdt" placeholder="Số điện thoại" class="border border-dark" />
+                @Html.ValidationMessageFor(m => m.sdt, "", new { @class = "badge badge-danger" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.ngay_sinh)
+                @*<input name="ngay_sinh" type="datetime" id="ngay_sinh" placeholder="Ngày sinh" />*@
+                @Html.TextBoxFor(model => model.ngay_sinh, new { @type = "date", @class = "form-control datepicker" })
+                @Html.ValidationMessageFor(m => m.ngay_sinh, "", new { @class = "badge badge-danger" })
+            </div>
+            <div class="form-group">
+                <input name="cmnd" type="text" id="cmnd" placeholder="CMND" class="border border-dark" />
+                @Html.ValidationMessageFor(m => m.cmnd, "", new { @class = "badge badge-danger" })
+            </div>
+
+            <div class="form-group">
+                <input name="email" type="email" id="email" placeholder="Nhập email" class="border border-dark" />
+                @Html.ValidationMessageFor(m => m.email, "", new { @class = "badge badge-danger" })
+            </div>
+
+
+
+            <div class="form-group">
+                @*<label for="pass1">Mật khẩu(gồm có: 1 chữ hoa, chữ thường, số, ký tự đặc biệt)<span>*</span></label>*@
+                <input name="password" id="password" type="password" placeholder="Nhập Password" class="border border-dark" />
+                @Html.ValidationMessageFor(m => m.password, "", new { @class = "badge badge-danger" })
+            </div>
+            @*<div class="form-group">
+                    <label for="pass2">Xác nhận mật khẩu<span>*</span></label>
+                    <input type="password" placeholder="Nhập lại mật khẩu" id="confirmpassword" name="confirmpassword" required>
+                    @Html.ValidationMessageFor(m => m.confirmpassword, "", new { @class = "badge badge-danger" })
+                </div>*@
+            @*<div class="form-group checkgroup">
+                    <input type="checkbox" id="bal" required checked>
+                    <label for="bal">Tôi đồng ý với <a href="#0">Điều khoản và chính sách </a></label>
+                </div>*@
+            @*<div class="form-group text-center">
+                    <input type="submit" value="Đăng ký">
+                </div>*@
+            <button type="submit">Đăng Ký</button>
+        </form>
+    </div>
+    <div class="overlay-container">
+        <div class="overlay">
+            <div class="overlay-panel overlay-left">
+                <h1>Welcome Back!</h1>
+                <p>Để giữ kết nối với chúng tôi, vui lòng đăng nhập bằng thông tin đăng nhập của bạn</p>
+                <a href="@Url.Action("Login", "User")">
+                    <button class="ghost" id="signIn">Đăng nhập</button>
+                </a>
+            </div>
+            <div class="overlay-panel overlay-right">
+                <h1>Hello, Friend!</h1>
+                <p>Đăng ký và đặt vé ngay!!!</p>
+                <button class="ghost" id="signUp">Đăng Ký</button>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            var message = $('#Message').text();
+            var warning = $('#Warning').text();
+            var error = $('#Error').text();
+            if (message != '') {
+                toastr.success(message);
+            }
+
+            if (warning != '') {
+                toastr.warning(warning);
+            }
+
+            if (error != '') {
+                toastr.error(error);
+            }
+        });
+    </script>
+}

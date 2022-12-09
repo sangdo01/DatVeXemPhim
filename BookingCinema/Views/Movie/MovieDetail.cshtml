@@ -1,0 +1,128 @@
+﻿@model BookingCinema.Models.Phim
+@{
+    ViewBag.Title = Model.ten_phim;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{ BookingCinema.Models.DatVeXemPhimDBContext db = new BookingCinema.Models.DatVeXemPhimDBContext();}
+<!-- ==========Banner-Section========== -->
+<section class="details-banner bg_img"
+         style="display: block; background-image: url(../../images/banner/@Model.Banner)">
+</section>
+<!-- ==========Banner-Section========== -->
+<!-- Thong tin-->
+<div class="w3l-ab-grids py-5">
+
+    <div class="container py-lg-4">
+        <div class="row ab-grids-sec align-items-center">
+            <div class="col-lg-4 ab-right">
+                <img class="img-fluid" src="~/images/movies/@Model.anh" style="height:500px;width: 400px">
+
+                <a class="watch" href="@Model.trailer" style="padding-top: 15px">
+                    <span class="fa fa-play"
+                          aria-hidden="true"></span>
+                    Watch Trailer
+                </a>
+
+
+            </div>
+            <div class="col-lg-6 ab-left pl-lg-4 mt-lg-0 mt-5">
+                <h3 class="hny-title">@Model.ten_phim</h3>
+                @if (@Model.thoi_luong != null)
+                {
+                    <p class="mt-3">
+                        <strong>Thời lượng: </strong>@Model.thoi_luong phút
+                    </p>
+                }
+                else
+                {
+                    <p class="mt-3">
+                        <strong>Thời lượng: </strong>Chưa xác định
+                    </p>
+                }
+                <p class="mt-3">
+                    <strong>Thể loại: </strong>
+                </p>
+                @foreach (var theloai in db.CT_TheLoai.Where(t => t.phim_id == Model.id))
+                {
+                    //check loc the loai theo loai phim dang chieu
+                    if (Model.comingsoon == 1)
+                    {
+                        <a href="@Url.Action("NowShowing", "Movie", new { page = 1, category = theloai.theloai_id})">
+
+                            @theloai.TheLoaiPhim.ten_the_loai |
+
+                        </a>
+                    }
+                    else if (Model.comingsoon == 2)
+                    {
+                        <a href="@Url.Action("ComingSoon", "Movie", new { page = 1, category = theloai.theloai_id})">
+
+                            @theloai.TheLoaiPhim.ten_the_loai |
+
+                        </a>
+                    }
+                }
+
+                <p class="mt-3">
+                    <strong>Diễn Viên: </strong>@Model.dien_vien
+                </p>
+                <p class="mt-3">
+                    <strong>Đạo Diễn:</strong> @Model.dao_dien
+                </p>
+                <p class="mt-3">
+                    <strong>Ngôn Ngữ:</strong> @Model.NgonNgu
+                </p>
+                <p class="mt-3">
+                    <strong>Ngày Công Chiếu:</strong> @Html.FormatValue(Model.ngay_cong_chieu, "{0:dd/MM/yyyy}")
+                </p>
+
+                @*<p class="mt-3">
+                        @Model.noi_dung
+                    </p>*@
+                <div class="ready-more mt-4">
+                    <a href="#" class="btn read-button">
+                        Mua Vé <span class="fa fa-angle-double-right ml-2"
+                                     aria-hidden="true"></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="row ab-grids-sec align-items-center" style="margin-top: 40px">
+            <h3 class="hny-title" style="margin-bottom: 30px">Nội Dung Phim</h3>
+            <p style="color: white">
+                @*@Model.noi_dung*@
+                @Html.Raw(Model.noi_dung)
+            </p>
+            @*<div class="stats_left">
+                    <div class="counter_grid">
+                        <div class="icon_info">
+                            <p class="counter">65</p>
+                            <h4>Movies</h4>
+
+                        </div>
+                    </div>
+                </div>*@
+        </div>
+
+    </div>
+</div>
+<!-- Thong tin-->
+
+
+<style>
+    .details-banner {
+        padding-inline: auto;
+        padding-top: 500px;
+        padding-bottom: 20px;
+        position: relative;
+    }
+
+    .bg_img {
+        background-size: cover;
+        background-position: center center;
+        background-repeat: no-repeat;
+        width: auto;
+        height: 100px;
+    }
+</style>

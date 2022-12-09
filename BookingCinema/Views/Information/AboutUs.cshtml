@@ -1,0 +1,82 @@
+﻿
+@{
+    ViewBag.Title = "AboutUs";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<!-- /about-->
+<div class="w3l-ab-grids py-5">
+    <div class="container py-lg-4">
+        <div class="row ab-grids-sec align-items-center">
+            <div class="col-lg-6 ab-right">
+                <img class="img-fluid" src="~/images/about/about-5.png">
+            </div>
+            <div class="col-lg-6 ab-left pl-lg-4 mt-lg-0 mt-5">
+                <h3 class="hny-title">SL Cinema</h3>
+                <p class="mt-3">
+                    <strong>SL Cinema </strong>là một trong top 5 cụm rạp chiếu phim lớn nhất toàn cầu và là nhà phát hành, cụm rạp chiếu phim lớn nhất Việt Nam.Mục tiêu của chúng tôi là trở thành hình mẫu công ty điển hình đóng góp cho sự phát triển không ngừng của ngành công nghiệp điện ảnh Việt Nam.
+                </p>
+                <p class="mt-3">
+                    <strong>SL Cinema </strong>sẽ tiếp tục cuộc hành trình bền bỉ trong việc góp phần xây dựng một nền công nghiệp điện ảnh Việt Nam ngày càng vững mạnh hơn cùng các khách hàng tiềm năng, các nhà làm phim, các đối tác kinh doanh uy tín, và cùng toàn thể xã hội.
+                </p>
+                <p class="mt-3">
+                    <strong>SL Cinema gồm các hệ thống rạp chiếu: </strong>
+                </p>
+                @foreach (var item in ViewBag.cinema)
+                {
+                    <p class="mt-3">
+                        <strong>@item.ten_rap</strong>
+                        <span> @item.dia_chi</span>
+                    </p>
+                }
+                <div class="ready-more mt-4">
+                    <a href="#" class="btn read-button">
+                        Read More <span class="fa fa-angle-double-right ml-2"
+                                        aria-hidden="true"></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="w3l-counter-stats-info text-center">
+            <div class="stats_left">
+                <div class="counter_grid">
+                    <div class="icon_info">
+                        <p class="counter">9+</p>
+                        <h4>Movies</h4>
+
+                    </div>
+                </div>
+            </div>
+            <div class="stats_left">
+                <div class="counter_grid">
+                    <div class="icon_info">
+                        <p class="counter">9+</p>
+                        <h4>Shows</h4>
+
+                    </div>
+                </div>
+            </div>
+            <div class="stats_left">
+                <div class="counter_grid">
+                    <div class="icon_info">
+                        <p class="counter">9+</p>
+                        <h4>Staff Members</h4>
+
+                    </div>
+                </div>
+            </div>
+            <div class="stats_left">
+                <div class="counter_grid">
+                    <div class="icon_info">
+                        <p class="counter">9+</p>
+                        <h4>No. of Users</h4>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

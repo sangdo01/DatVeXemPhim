@@ -1,0 +1,255 @@
+﻿
+@{
+    ViewBag.Title = "Trang chủ| SL Cinema";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{int b = 0; BookingCinema.Models.DatVeXemPhimDBContext moviedb = new BookingCinema.Models.DatVeXemPhimDBContext(); }
+
+
+
+
+<!-- main-slider -->
+<!--<section class="w3l-main-slider position-relative" id="home">
+    <div class="companies20-content">
+        <div class="owl-one owl-carousel owl-theme">-->
+@*lấy ra list phim có status = 1 với ngày công chiếu theo thứ tự giảm dần*@
+<!--@foreach (var banner in moviedb.Phims.Where(x => x.status == 1).OrderByDescending(x => x.ngay_cong_chieu))
+            {
+                //if (b == 5)
+                //{
+                //    break;
+                //}
+                <div class="item">
+                    <ul>
+                        <li>
+                            <div class="slider-info banner-view bg bg2" style="background: url(../../images/banner/@banner.Banner)">
+                                <div class="banner-info">
+                                    <h3>@banner.ten_phim</h3>
+                                    <p>
+                                        @banner.thoi_luong phút <br />
+                                        <span class="over-para">
+                                            @banner.noi_dung
+                                        </span>
+                                    </p>
+                                    <a href="#small-dialog1" class="popup-with-zoom-anim play-view1">
+                                        <span class="video-play-icon">
+                                            <span class="fa fa-play"></span>
+                                        </span>
+                                        <h6>Watch Trailer</h6>
+                                    </a>
+                                    <div id="small-dialog1" class="zoom-anim-dialog mfp-hide">
+                                        <iframe src="@banner.trailer" allow="autoplay; fullscreen"
+                                                allowfullscreen=""></iframe>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                //  b++;
+            }
+
+        </div>
+    </div>
+</section>-->
+<!-- trang dau -->
+<section class="w3l-mid-slider position-relative">
+    <div class="companies20-content">
+        <div class="owl-mid owl-carousel owl-theme">
+            @foreach (var item in moviedb.Phims.Where(x => x.status == 1))
+            {
+                <div class="item" style="height: 500px">
+                    <ul>
+                        <li>
+                            <div class="slider-info mid-view bg bg2" style="background: url(../../images/banner/@item.Banner)">
+                                <div class="container">
+                                    <div class="mid-info">
+                                        <h3>@item.ten_phim</h3>
+                                        <span class="post">
+                                            <span class="fa fa-clock-o"> </span>@Html.FormatValue(item.ngay_cong_chieu, "{0:dd/MM/yyyy}")
+                                        </span>
+                                        @if (item.thoi_luong != null)
+                                        {
+                                            <p>Thời lượng: @item.thoi_luong phút</p>
+                                        }
+                                        else
+                                        {
+                                            <p>Thời lượng: Chưa xác định</p>
+                                        }
+
+                                        @foreach (var theloai in moviedb.CT_TheLoai.Where(t => t.phim_id == item.id))
+                                        {
+                                            <span class="sub-text">@theloai.TheLoaiPhim.ten_the_loai</span>
+                                        }
+                                        <br />
+                                        <a class="watch" href="@item.trailer">
+                                            <span class="fa fa-play"
+                                                  aria-hidden="true"></span>
+                                            Xem Trailer
+                                        </a>
+
+                                        @*<a href="#small-dialog1" class="popup-with-zoom-anim play-view1">
+                                                <span class="video-play-icon">
+                                                    <span class="fa fa-play"></span>
+                                                </span>
+                                                <h6>Watch Trailer</h6>
+                                            </a>
+                                            <div id="small-dialog1" class="zoom-anim-dialog mfp-hide">
+                                                <iframe src="@item.trailer" allow="autoplay; fullscreen"
+                                                        allowfullscreen=""></iframe>
+                                            </div>*@
+
+                                        <div class="button-center text-center mt-4">
+                                            <a href="@Url.Action("MovieDetail","Movie", new {id = item.id })" class="btn watch-button">Chi tiết</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+<!-- trang dau -->
+<!-- main-slider -->
+<!--Phim đang chiếu-->
+@*<div>
+        @ViewBag.Content
+    </div>*@
+
+
+<section class="w3l-grids">
+    <div class="grids-main py-5">
+        <div class="container py-lg-3">
+            <div class="headerhny-title">
+                <div class="w3l-title-grids">
+                    <div class="headerhny-left">
+                        <h3 class="hny-title">Phim Đang Chiếu</h3>
+                    </div>
+                    <div class="headerhny-right text-lg-right">
+                        <h4><a class="show-title" href="@Url.Action("NowShowing", "Movie")">Show all</a></h4>
+                    </div>
+                </div>
+            </div>
+            <div class="owl-three owl-carousel owl-theme">
+                @foreach (var movie in moviedb.Phims.Where(m => m.status == 1 && m.comingsoon == 1).OrderByDescending(x => x.ngay_cong_chieu))
+                {
+                    <div class="item vhny-grid">
+                        <div class="box16 mb-0">
+                            <a href="movies.html">
+                                <figure>
+                                    <img class="img-fluid" src="~/images/movies/@movie.anh" alt="@movie.ten_phim" style="height: 350px">
+                                </figure>
+                                <div class="box-content">
+                                    <h4>
+                                        <span class="post">
+                                            <span class="fa fa-clock-o"> </span>@Html.FormatValue(movie.ngay_cong_chieu, "{0:dd/MM/yyyy}") @*@movie.ngay_cong_chieu*@
+                                        </span>
+                                        <span class="post fa fa-heart text-right"></span>
+                                    </h4>
+                                </div>
+                            </a>
+                        </div>
+                        <h3> <a class="title-gd" href="movies.html">@movie.ten_phim</a></h3>
+                        <div class="button-center text-center mt-4">
+                            <a href="@Url.Action("MovieDetail","Movie", new {id=movie.id })" class="btn watch-button">Chi Tiết</a>
+                        </div>
+                    </div>
+                }
+
+            </div>
+        </div>
+
+    </div>
+</section>
+<!--Phim đang chiếu-->
+<!--Phim sắp chiếu-->
+<section class="w3l-grids">
+    <div class="grids-main py-5">
+        <div class="container py-lg-3">
+            <div class="headerhny-title">
+                <div class="w3l-title-grids">
+                    <div class="headerhny-left">
+                        <h3 class="hny-title">Phim Sắp Chiếu</h3>
+                    </div>
+                    <div class="headerhny-right text-lg-right">
+                        <h4><a class="show-title" href="@Url.Action("ComingSoon", "Movie")">Show all</a></h4>
+                    </div>
+                </div>
+            </div>
+            <div class="owl-three owl-carousel owl-theme">
+                @foreach (var moviesoon in moviedb.Phims.Where(m => m.status == 1 && m.comingsoon == 2).OrderByDescending(x => x.ngay_cong_chieu))
+                {
+                    <div class="item vhny-grid">
+                        <div class="box16 mb-0">
+                            <a href="movies.html">
+                                <figure>
+                                    <img class="img-fluid" src="~/images/movies/@moviesoon.anh" alt="@moviesoon.ten_phim" style="height:350px">
+                                </figure>
+                                <div class="box-content">
+                                    <h4>
+                                        <span class="post">
+                                            <span class="fa fa-clock-o"> </span>@Html.FormatValue(moviesoon.ngay_cong_chieu, "{0:dd/MM/yyyy}")
+                                        </span>
+                                        <span class="post fa fa-heart text-right"></span>
+                                    </h4>
+                                </div>
+                            </a>
+                        </div>
+                        <h3> <a class="title-gd" href="movies.html">@moviesoon.ten_phim</a></h3>
+                        <div class="button-center text-center mt-4">
+                            <a href="@Url.Action("MovieDetail","Movie", new {id=moviesoon.id })" class="btn watch-button">Chi Tiết</a>
+                        </div>
+
+                    </div>
+                }
+            </div>
+        </div>
+
+    </div>
+</section>
+<!--Phim sắp chiếu-->
+<!--News-->
+<section class="w3l-grids">
+    <div class="grids-main py-5">
+        <div class="container py-lg-3">
+            <div class="headerhny-title">
+                <div class="w3l-title-grids">
+                    <div class="headerhny-left">
+                        <h3 class="hny-title">Tin Tức</h3>
+                    </div>
+                    <div class="headerhny-right text-lg-right">
+                        <h4><a class="show-title" href="@Url.Action("Index", "News")">Show all</a></h4>
+                    </div>
+                </div>
+            </div>
+            <div class="owl-three owl-carousel owl-theme">
+                @{ BookingCinema.Models.DatVeXemPhimDBContext db = new BookingCinema.Models.DatVeXemPhimDBContext();}
+                @foreach (var news in db.TinTucs.OrderByDescending(x => x.thoi_gian_dang))
+                {
+                    <div class="item vhny-grid">
+                        <div>
+                            <a href="@Url.Action("NewsDetail", "News", new { page = 1, id = news.id})">
+                                <figure>
+                                    <img class="img-fluid" src="~/images/news/@news.anh" alt="">
+                                </figure>
+                                <div class="box-content">
+                                    <h4 style="font-size: 1rem">
+                                        <span class="post">
+                                            @news.tieu_de
+                                        </span>
+                                    </h4>
+                                </div>
+                            </a>
+                        </div>
+                        <h3> <a class="title-gd" href="@Url.Action("NewsDetail", "News", new { page = 1, id = news.id})">@*@news.tieu_de*@</a></h3>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>
+<!--News-->
+

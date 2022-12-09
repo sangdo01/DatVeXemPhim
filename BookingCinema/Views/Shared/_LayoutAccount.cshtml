@@ -1,0 +1,128 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    <link rel="stylesheet" type="text/css" href="~/template/client/assets/css/as-alert-message.min.css">
+    <link rel="stylesheet" type="text/css"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="~/template/client/assets/css/style-starter.css">
+    <link rel="stylesheet" type="text/css" href="~/template/client/assets/css/sign-in.css">
+
+    <!-- toast -->
+    <link href="~/Content/toastr.css" rel="stylesheet" />
+    <link href="~/Content/toastr.min.css" rel="stylesheet" />
+</head>
+
+<body>
+    <header id="site-header" class="w3l-header fixed-top">
+        <!--/nav-->
+        <nav class="navbar navbar-expand-lg navbar-light fill px-lg-0 py-0 px-3">
+            <div class="container">
+                <h1>
+                    <a class="navbar-brand" href="@Url.Action("Index", "Home")">
+                        <span class="fa fa-play icon-log"
+                              aria-hidden="true"></span>
+                        SL Cinema
+                    </a>
+                </h1>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                </div>
+                <div class="Login_SignUp" id="login_s">
+                    <!-- style="font-size: 2rem ; display: inline-block; position: relative;" -->
+                    <!-- <li class="nav-item"> -->
+                    <a class="nav-link" href="sign_in.html"><i class="fa fa-user-circle-o"></i></a>
+                    <!-- </li> -->
+                </div>
+                <!-- toggle switch for light and dark theme -->
+                <div class="mobile-position">
+                    <nav class="navigation">
+                        <div class="theme-switch-wrapper">
+                            <label class="theme-switch" for="checkbox">
+                                <input type="checkbox" id="checkbox">
+                                <div class="mode-container">
+                                    <i class="gg-sun"></i>
+                                    <i class="gg-moon"></i>
+                                </div>
+                            </label>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    @Html.Action("MenuPartial", "Home")
+    @Html.Partial("_Notifications")
+
+    @RenderBody()
+    <!-- toastr -->
+    <div style="display:none">
+        <span id="message" style="color: green; background-color:aquamarine" class="d-none">@TempData["Message"]</span>
+        <span id="Warning" class="d-none">@TempData["Warning"]</span>
+        <span id="Error" class="d-none">@TempData["Error"]</span>
+    </div>
+
+
+    @*<script type="text/javascript" src="~/template/client/assets/js/as-alert-message.min.js"></script>*@
+    @*<script src="~/template/client/assets/js/jquery-3.3.1.min.js"></script>*@
+    <!--/theme-change-->
+    <script src="~/template/client/assets/js/theme-change.js"></script>
+    <!-- disable body scroll which navbar is in active -->
+    <script>
+        $(function () {
+            $('.navbar-toggler').click(function () {
+                $('body').toggleClass('noscroll');
+            })
+        });
+    </script>
+    <!-- disable body scroll which navbar is in active -->
+    <!--/MENU-JS-->
+    <script>
+        $(window).on("scroll", function () {
+            var scroll = $(window).scrollTop();
+
+            if (scroll >= 80) {
+                $("#site-header").addClass("nav-fixed");
+            } else {
+                $("#site-header").removeClass("nav-fixed");
+            }
+        });
+
+        //Main navigation Active Class Add Remove
+        $(".navbar-toggler").on("click", function () {
+            $("header").toggleClass("active");
+        });
+        $(document).on("ready", function () {
+            if ($(window).width() > 991) {
+                $("header").removeClass("active");
+            }
+            $(window).on("resize", function () {
+                if ($(window).width() > 991) {
+                    $("header").removeClass("active");
+                }
+            });
+        });
+    </script>
+
+
+    <script src="~/template/client/assets/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript" src="~/template/client/assets/js/sign-in.js"></script>
+
+
+
+    <!-- toast -->
+    <script src="~/Scripts/toastr.js"></script>
+    <script src="~/Scripts/toastr.min.js"></script>
+    @*<script src="~/Scripts/Message.js"></script>*@
+
+    @RenderSection("Scripts", required: false)
+
+</body>
+    
+</html>

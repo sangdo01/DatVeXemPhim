@@ -1,0 +1,55 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>@ViewBag.Title| SL Cinema</title>
+    <!-- plugins:css -->
+    <link rel="stylesheet" href="~/template/admin/assets/vendors/mdi/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="~/template/admin/assets/vendors/css/vendor.bundle.base.css">
+    <!-- endinject -->
+    <!-- Plugin css for this page -->
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <!-- endinject -->
+    <!-- Layout styles -->
+    <link rel="stylesheet" href="~/template/admin/assets/css/style.css">
+    <!-- End layout styles -->
+    <link rel="shortcut icon" href="~/template/admin/assets/images/favicon.ico" />
+    <!-- toast -->
+    <link href="~/Content/toastr.css" rel="stylesheet" />
+    <link href="~/Content/toastr.min.css" rel="stylesheet" />
+</head>
+<body>
+
+    <div style="display:none;">
+        <span id="Message" class="d-none">@TempData["Message"]</span>
+        <span id="Warning" class="d-none">@TempData["Warning"]</span>
+        <span id="Error" class="d-none">@TempData["Error"]</span>
+    </div>
+    @RenderBody()
+
+    <!--toast -->
+    <script src="~/Scripts/toastr.js"></script>
+    <script src="~/Scripts/toastr.min.js"></script>
+    <!-- plugins:js -->
+    <script src="~/template/admin/assets/vendors/js/vendor.bundle.base.js"></script>
+    <!-- endinject -->
+    <!-- Plugin js for this page -->
+    <!-- End plugin js for this page -->
+    <!-- inject:js -->
+    <script src=".~/template/admin/assets/js/off-canvas.js"></script>
+    <script src="~/template/admin/assets/js/hoverable-collapse.js"></script>
+    <script src="~/template/admin/assets/js/misc.js"></script>
+    <!-- endinject -->
+    <!-- toast -->
+    @*<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>*@
+    <script src="~/Scripts/toastr.js"></script>
+    <script src="~/Scripts/toastr.min.js"></script>
+    
+    @RenderSection("Scripts", required: false)
+</body>
+</html>
+
