@@ -17,6 +17,7 @@ namespace BookingCinema.Models
         public int id { get; set; }
         public Nullable<int> orders_id { get; set; }
         public Nullable<int> ghe_id { get; set; }
+        public Nullable<decimal> giave { get; set; }
     
         public virtual GheNgoi GheNgoi { get; set; }
         public virtual Order Order { get; set; }

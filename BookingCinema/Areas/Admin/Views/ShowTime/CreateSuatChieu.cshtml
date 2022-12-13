@@ -1,0 +1,148 @@
+﻿@model BookingCinema.Models.SuatChieu
+@{
+    ViewBag.Title = "CreateSuatChieu";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="main-panel">
+    <div class="content-wrapper">
+        <div class="container-fluid">
+            <!-- start page title -->
+            <div class="row align-items-center">
+                <div class="col-sm-6">
+                    <div class="page-title-box">
+                        <h4 class="font-size-18">Suất chiếu</h4>
+                        <ol class="breadcrumb mb-0">
+                            <li class="breadcrumb-item"><a href="javascript: void(0);">Admin</a></li>
+                            <li class="breadcrumb-item active">Thêm suất chiếu</li>
+                        </ol>
+                    </div>
+                </div>
+
+            </div>
+            <!-- end page title -->
+
+
+            @using (Html.BeginForm("CreateSuatChieu", "Showtime", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+                                <div class="form-group row">
+                                    @Html.Label("Giờ chiếu", htmlAttributes: new { @class = "col-sm-2 col-form-label" })
+                                    <div class="col-md-10">
+                                        @Html.DropDownList("timeeframe", (MultiSelectList)ViewBag.Timeid, new { multiple = "multiple" })
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group row">
+                                    <label class="col-sm-2 col-form-label">Ngày chiếu</label>
+                                    <div class="col-md-2">
+                                        @Html.EditorFor(model => model.ngay_chieu, "Ngày chiếu", new { htmlAttributes = new { type = "date", @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.ngay_chieu, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    @Html.LabelFor(model => model.phim_id, "Phim", htmlAttributes: new { @class = "col-sm-2 col-form-label" })
+                                    <div class="col-md-10">
+                                        @Html.DropDownList("phim_id", "<--- Phim --->")
+                                    </div>
+                                </div>
+
+
+
+                                <div class="form-group row">
+                                    @Html.Label("Rạp chiếu", htmlAttributes: new { @class = "col-sm-2 col-form-label" })
+                                    <div class="col-md-10">
+                                        <select name="cinema" id="cinema">
+                                            <option value="0">Chọn rạp phim</option>
+                                            @foreach (var rap in ViewBag.rapchieu)
+                                            {
+                                                <option value="@rap.id">@rap.ten_rap</option>
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    @Html.LabelFor(model => model.PhongChieu, "Phòng chiếu", htmlAttributes: new { @class = "col-sm-2 col-form-label" })
+                                    <div class="col-md-10">
+                                        <select name="phong_chieu_id" id="phong_chieu_id">
+                                            <option value="0">Chọn phòng chiếu</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="float-lg-right">
+                                    <div class="form-group mb-0">
+                                        <div>
+                                            <input type="submit" value="Create" class="btn btn-info btn-fw" />
+                                            <input type="reset" value="Reset" class="btn btn-warning btn-fw" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group mb-4">
+
+                                </div>
+
+                                <div class="form-group mb-0">
+                                    @Html.ActionLink("Trở về", "ListShowTime")
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+
+
+        </div>
+
+    </div>
+</div>
+
+
+
+@section Scripts
+    {
+    <script>
+        $(document).ready(function () {
+            $('#cinema').change(function () {
+                var id = $("#cinema option:selected").val();
+                loadRoom(id);
+            });
+            function loadRoom(id) {
+                $.ajax({
+                    url: '/Showtime/RoomOfCinema/',
+                    type: 'GET',
+                    data: {
+                        id: id,
+                    },
+                    success: function (res) {
+                        if (res.count != null) {
+                            var idr = res.idroom;
+                            var name = res.roomname;
+                            var html = "";
+                            for (let i = 0; i < res.count; i++) {
+                                html += '<option value="' + idr[i] + '">' + name[i] + '</option>';
+                            }
+                            $('#phong_chieu_id').html(html);
+
+                            $('#EditTime').modal('show');
+                        }
+                    }
+                })
+            }
+        });
+    </script>
+
+}
+

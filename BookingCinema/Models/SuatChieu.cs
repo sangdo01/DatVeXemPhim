@@ -17,6 +17,7 @@ namespace BookingCinema.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public SuatChieu()
         {
+            this.Orders = new HashSet<Order>();
             this.SuatChieu_KhungGio = new HashSet<SuatChieu_KhungGio>();
         }
     
@@ -27,6 +28,8 @@ namespace BookingCinema.Models
         public Nullable<int> phong_chieu_id { get; set; }
         public Nullable<int> status { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Order> Orders { get; set; }
         public virtual Phim Phim { get; set; }
         public virtual PhongChieu PhongChieu { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

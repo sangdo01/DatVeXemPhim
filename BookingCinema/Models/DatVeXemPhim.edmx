@@ -32,6 +32,7 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="orders_id" Type="int" />
           <Property Name="ghe_id" Type="int" />
+          <Property Name="giave" Type="decimal" Precision="18" Scale="0" />
         </EntityType>
         <EntityType Name="CT_TheLoai">
           <Key>
@@ -114,7 +115,7 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="time" Type="datetime" />
+          <Property Name="timeid" Type="int" />
           <Property Name="ngay_mua" Type="datetime" />
           <Property Name="tong_tien" Type="decimal" Precision="18" Scale="0" />
           <Property Name="phuong_thuc_thanh_toan" Type="nvarchar(max)" />
@@ -123,6 +124,8 @@
           <Property Name="phim_id" Type="int" />
           <Property Name="phong_chieu_id" Type="int" />
           <Property Name="so_luong_ve" Type="int" />
+          <Property Name="suatchieu_id" Type="int" />
+          <Property Name="idtime" Type="int" />
         </EntityType>
         <EntityType Name="Phim">
           <Key>
@@ -341,6 +344,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Orders_SuatChieu">
+          <End Role="SuatChieu" Type="Self.SuatChieu" Multiplicity="0..1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SuatChieu">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="suatchieu_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="Fk_PhimOrder">
           <End Role="Phim" Type="Self.Phim" Multiplicity="0..1" />
           <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
@@ -498,6 +513,10 @@
             <End Role="Orders" EntitySet="Orders" />
             <End Role="CT_Orders" EntitySet="CT_Orders" />
           </AssociationSet>
+          <AssociationSet Name="FK_Orders_SuatChieu" Association="Self.FK_Orders_SuatChieu">
+            <End Role="SuatChieu" EntitySet="SuatChieu" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
           <AssociationSet Name="Fk_PhimOrder" Association="Self.Fk_PhimOrder">
             <End Role="Phim" EntitySet="Phim" />
             <End Role="Orders" EntitySet="Orders" />
@@ -567,6 +586,7 @@
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="orders_id" Type="Int32" />
           <Property Name="ghe_id" Type="Int32" />
+          <Property Name="giave" Type="Decimal" Precision="18" Scale="0" />
           <NavigationProperty Name="GheNgoi" Relationship="Self.Fk_Ghe" FromRole="CT_Orders" ToRole="GheNgoi" />
           <NavigationProperty Name="Order" Relationship="Self.Fk_Oder" FromRole="CT_Orders" ToRole="Orders" />
         </EntityType>
@@ -661,7 +681,7 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="time" Type="DateTime" Precision="3" />
+          <Property Name="timeid" Type="Int32" />
           <Property Name="ngay_mua" Type="DateTime" Precision="3" />
           <Property Name="tong_tien" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="phuong_thuc_thanh_toan" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
@@ -670,9 +690,12 @@
           <Property Name="phim_id" Type="Int32" />
           <Property Name="phong_chieu_id" Type="Int32" />
           <Property Name="so_luong_ve" Type="Int32" />
+          <Property Name="suatchieu_id" Type="Int32" />
+          <Property Name="idtime" Type="Int32" />
           <NavigationProperty Name="CT_DichVu" Relationship="Self.Fk_CT_DichVu_Orders" FromRole="Orders" ToRole="CT_DichVu" />
           <NavigationProperty Name="CT_Orders" Relationship="Self.Fk_Oder" FromRole="Orders" ToRole="CT_Orders" />
           <NavigationProperty Name="KhachHang" Relationship="Self.Fk_KhachHangOrder" FromRole="Orders" ToRole="KhachHang" />
+          <NavigationProperty Name="SuatChieu" Relationship="Self.FK_Orders_SuatChieu" FromRole="Orders" ToRole="SuatChieu" />
           <NavigationProperty Name="Phim" Relationship="Self.Fk_PhimOrder" FromRole="Orders" ToRole="Phim" />
           <NavigationProperty Name="PhongChieu" Relationship="Self.Fk_PhongChieuOrder" FromRole="Orders" ToRole="PhongChieu" />
         </EntityType>
@@ -732,6 +755,7 @@
           <Property Name="phim_id" Type="Int32" />
           <Property Name="phong_chieu_id" Type="Int32" />
           <Property Name="status" Type="Int32" />
+          <NavigationProperty Name="Orders" Relationship="Self.FK_Orders_SuatChieu" FromRole="SuatChieu" ToRole="Orders" />
           <NavigationProperty Name="Phim" Relationship="Self.Fk_PhimSC" FromRole="SuatChieu" ToRole="Phim" />
           <NavigationProperty Name="PhongChieu" Relationship="Self.Fk_PhimPC" FromRole="SuatChieu" ToRole="PhongChieu" />
           <NavigationProperty Name="SuatChieu_KhungGio" Relationship="Self.Fk_SuatChieu_KhungGio_SuatChieu" FromRole="SuatChieu" ToRole="SuatChieu_KhungGio" />
@@ -932,6 +956,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Orders_SuatChieu">
+          <End Role="SuatChieu" Type="Self.SuatChieu" Multiplicity="0..1" />
+          <End Role="Orders" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SuatChieu">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="suatchieu_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="Fk_PhimOrder">
           <End Role="Phim" Type="Self.Phim" Multiplicity="0..1" />
           <End Role="Orders" Type="Self.Order" Multiplicity="*" />
@@ -1073,6 +1109,10 @@
             <End Role="KhungGio" EntitySet="KhungGios" />
             <End Role="SuatChieu_KhungGio" EntitySet="SuatChieu_KhungGio" />
           </AssociationSet>
+          <AssociationSet Name="FK_Orders_SuatChieu" Association="Self.FK_Orders_SuatChieu">
+            <End Role="SuatChieu" EntitySet="SuatChieux" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
           <AssociationSet Name="Fk_PhimOrder" Association="Self.Fk_PhimOrder">
             <End Role="Phim" EntitySet="Phims" />
             <End Role="Orders" EntitySet="Orders" />
@@ -1132,6 +1172,7 @@
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="orders_id" ColumnName="orders_id" />
                 <ScalarProperty Name="ghe_id" ColumnName="ghe_id" />
+                <ScalarProperty Name="giave" ColumnName="giave" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1222,7 +1263,7 @@
             <EntityTypeMapping TypeName="DatVeXemPhimModel.Order">
               <MappingFragment StoreEntitySet="Orders">
                 <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="time" ColumnName="time" />
+                <ScalarProperty Name="timeid" ColumnName="timeid" />
                 <ScalarProperty Name="ngay_mua" ColumnName="ngay_mua" />
                 <ScalarProperty Name="tong_tien" ColumnName="tong_tien" />
                 <ScalarProperty Name="phuong_thuc_thanh_toan" ColumnName="phuong_thuc_thanh_toan" />
@@ -1231,6 +1272,8 @@
                 <ScalarProperty Name="phim_id" ColumnName="phim_id" />
                 <ScalarProperty Name="phong_chieu_id" ColumnName="phong_chieu_id" />
                 <ScalarProperty Name="so_luong_ve" ColumnName="so_luong_ve" />
+                <ScalarProperty Name="suatchieu_id" ColumnName="suatchieu_id" />
+                <ScalarProperty Name="idtime" ColumnName="idtime" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

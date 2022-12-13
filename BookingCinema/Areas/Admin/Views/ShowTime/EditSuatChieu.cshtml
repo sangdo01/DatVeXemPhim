@@ -1,0 +1,112 @@
+﻿@model BookingCinema.Models.SuatChieu
+@{
+    ViewBag.Title = "EditSuatChieu";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="main-panel">
+    <div class="content-wrapper">
+        <div class="container-fluid">
+            <!-- start page title -->
+            <div class="row align-items-center">
+                <div class="col-sm-6">
+                    <div class="page-title-box">
+                        <h4 class="font-size-18">Suất chiếu</h4>
+                        <ol class="breadcrumb mb-0">
+                            <li class="breadcrumb-item"><a href="javascript: void(0);">Admin</a></li>
+                            <li class="breadcrumb-item active">Chỉnh sửa suất chiếu</li>
+                        </ol>
+                    </div>
+                </div>
+
+            </div>
+            <!-- end page title -->
+
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                @Html.HiddenFor(model => model.id)
+                                @Html.HiddenFor(model => model.status)
+
+
+                                <div class="form-group row">
+                                    @Html.Label("Ngày chiếu", htmlAttributes: new { @class = "col-sm-2 col-form-label" })
+                                    <div class="col-md-2">
+                                        @Html.EditorFor(model => model.ngay_chieu, new { htmlAttributes = new { type = "date", @class = "form-control" } })
+                                        @*<input type="date" class="form-control text-box single-line" value="@Html.FormatValue(Model.ngay_chieu , "{0:yyyy-MM-dd}")" readonly />*@
+                                        @Html.ValidationMessageFor(model => model.ngay_chieu, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    @Html.Label("Phim", htmlAttributes: new { @class = "col-sm-2 col-form-label" })
+                                    <div class="col-md-10">
+                                        @*<input type="text" class="form-control" value="@Model.phim.ten_phim" readonly />*@
+
+                                        @Html.DropDownListFor(model => model.phim_id, (SelectList)ViewBag.phim, new { @class = "col-sm-4 col-form-label" })
+
+                                    </div>
+                                </div>
+                                @*<div class="form-group row">
+                                @Html.Label("Phòng chiếu", htmlAttributes: new { @class = "col-sm-2 col-form-label" })
+                                <div class="col-md-10">
+                                    @Html.DropDownListFor(model => model.phong_chieu_id, (SelectList)ViewBag.phong_chieu, new { @class = "col-sm-2 col-form-label" })
+                                </div>
+                            </div>*@
+
+                                <div class="form-group row">
+                                    <label class="col-sm-2 col-form-label" for="cinema">Rạp phim:</label>
+                                    <div class="col-md-10">
+                                        <select name="cinema" id="cinema" class="selectpc">
+                                            <option value="@Model.PhongChieu.RapChieu.id">@Model.PhongChieu.RapChieu.ten_rap</option>
+                                            @foreach (var rap in ViewBag.rapchieu)
+                                            {
+                                                if (rap.id != @Model.PhongChieu.RapChieu.id)
+                                                {
+                                                    <option value="@rap.id">@rap.ten_rap</option>
+                                                }
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    @Html.LabelFor(model => model.PhongChieu, "Phòng chiếu", htmlAttributes: new { @class = "col-sm-2 col-form-label" })
+                                    <div class="col-md-10">
+                                        <select name="phong_chieu_id" id="phong_chieu_id" class="selectpc">
+                                            <option value="@Model.phong_chieu_id" selected>@Model.PhongChieu.ten_phong_chieu</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="float-lg-right">
+                                    <div class="form-group mb-0">
+                                        <div>
+                                            <input type="submit" value="Save" class="btn btn-info btn-fw" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group mb-4">
+
+                                </div>
+
+                                <div class="form-group mb-0">
+                                    @Html.ActionLink("Trở về", "ListShowTime")
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            }
+
+        </div>
+    </div>
+</div>
+

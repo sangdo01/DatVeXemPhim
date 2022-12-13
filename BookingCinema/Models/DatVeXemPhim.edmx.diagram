@@ -4,27 +4,27 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="f5bc4aa1e6534d4780c1540961fff4ca" Name="Diagram1">
-        <EntityTypeShape EntityType="DatVeXemPhimModel.BinhLuan" Width="1.5" PointX="3" PointY="7.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatVeXemPhimModel.CT_DichVu" Width="1.5" PointX="8.25" PointY="8" IsExpanded="true" />
+      <Diagram DiagramId="cb49b468e1294b8bbc20423dca601ccf" Name="Diagram1">
+        <EntityTypeShape EntityType="DatVeXemPhimModel.BinhLuan" Width="1.5" PointX="3" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatVeXemPhimModel.CT_DichVu" Width="1.5" PointX="8.25" PointY="8.125" IsExpanded="true" />
         <EntityTypeShape EntityType="DatVeXemPhimModel.CT_Orders" Width="1.5" PointX="8.25" PointY="5.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatVeXemPhimModel.CT_TheLoai" Width="1.5" PointX="3" PointY="5.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatVeXemPhimModel.DichVu" Width="1.5" PointX="6" PointY="4" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatVeXemPhimModel.GheNgoi" Width="1.5" PointX="6" PointY="15.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatVeXemPhimModel.KhachHang" Width="1.5" PointX="0.75" PointY="12.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatVeXemPhimModel.KhungGio" Width="1.5" PointX="3" PointY="19.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatVeXemPhimModel.LienHe" Width="1.5" PointX="8.75" PointY="1.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatVeXemPhimModel.LoaiGhe" Width="1.5" PointX="3.75" PointY="16" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatVeXemPhimModel.Order" Width="1.5" PointX="6" PointY="7.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatVeXemPhimModel.Phim" Width="1.5" PointX="0.75" PointY="7" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatVeXemPhimModel.PhongChieu" Width="1.5" PointX="3.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatVeXemPhimModel.RapChieu" Width="1.5" PointX="1.5" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatVeXemPhimModel.CT_TheLoai" Width="1.5" PointX="3" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatVeXemPhimModel.DichVu" Width="1.5" PointX="6" PointY="15" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatVeXemPhimModel.GheNgoi" Width="1.5" PointX="6" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatVeXemPhimModel.KhachHang" Width="1.5" PointX="0.75" PointY="12.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatVeXemPhimModel.KhungGio" Width="1.5" PointX="3" PointY="16.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatVeXemPhimModel.LienHe" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatVeXemPhimModel.LoaiGhe" Width="1.5" PointX="3.75" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatVeXemPhimModel.Order" Width="1.5" PointX="6" PointY="7" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatVeXemPhimModel.Phim" Width="1.5" PointX="0.75" PointY="7.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatVeXemPhimModel.PhongChieu" Width="1.5" PointX="0.75" PointY="16.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatVeXemPhimModel.RapChieu" Width="1.5" PointX="1.5" PointY="21.25" IsExpanded="true" />
         <EntityTypeShape EntityType="DatVeXemPhimModel.SuatChieu" Width="1.5" PointX="3" PointY="11.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatVeXemPhimModel.SuatChieu_KhungGio" Width="1.5" PointX="5.25" PointY="12.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatVeXemPhimModel.sysdiagram" Width="1.5" PointX="5.75" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatVeXemPhimModel.SuatChieu_KhungGio" Width="1.5" PointX="5.25" PointY="12.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatVeXemPhimModel.sysdiagram" Width="1.5" PointX="8.75" PointY="1" IsExpanded="true" />
         <EntityTypeShape EntityType="DatVeXemPhimModel.TheLoaiPhim" Width="1.5" PointX="0.75" PointY="4.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatVeXemPhimModel.TinTuc" Width="1.5" PointX="10.75" PointY="1.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatVeXemPhimModel.User" Width="1.5" PointX="10.75" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatVeXemPhimModel.TinTuc" Width="1.5" PointX="10.75" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatVeXemPhimModel.User" Width="1.5" PointX="10.75" PointY="4" IsExpanded="true" />
         <AssociationConnector Association="DatVeXemPhimModel.FK_BinhLuan_KhachHang" ManuallyRouted="false" />
         <AssociationConnector Association="DatVeXemPhimModel.FK_TinTuc_phim" ManuallyRouted="false" />
         <AssociationConnector Association="DatVeXemPhimModel.Fk_CT_DichVu_DichVu" ManuallyRouted="false" />
@@ -37,6 +37,7 @@
         <AssociationConnector Association="DatVeXemPhimModel.Fk_LoaiGhe" ManuallyRouted="false" />
         <AssociationConnector Association="DatVeXemPhimModel.Fk_KhachHangOrder" ManuallyRouted="false" />
         <AssociationConnector Association="DatVeXemPhimModel.Fk_SuatChieu_KhungGio_KhungGio" ManuallyRouted="false" />
+        <AssociationConnector Association="DatVeXemPhimModel.FK_Orders_SuatChieu" ManuallyRouted="false" />
         <AssociationConnector Association="DatVeXemPhimModel.Fk_PhimOrder" ManuallyRouted="false" />
         <AssociationConnector Association="DatVeXemPhimModel.Fk_PhongChieuOrder" ManuallyRouted="false" />
         <AssociationConnector Association="DatVeXemPhimModel.Fk_PhimSC" ManuallyRouted="false" />

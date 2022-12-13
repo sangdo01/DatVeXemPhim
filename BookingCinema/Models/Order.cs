@@ -22,7 +22,7 @@ namespace BookingCinema.Models
         }
     
         public int id { get; set; }
-        public Nullable<System.DateTime> time { get; set; }
+        public Nullable<int> timeid { get; set; }
         public Nullable<System.DateTime> ngay_mua { get; set; }
         public Nullable<decimal> tong_tien { get; set; }
         public string phuong_thuc_thanh_toan { get; set; }
@@ -31,12 +31,15 @@ namespace BookingCinema.Models
         public Nullable<int> phim_id { get; set; }
         public Nullable<int> phong_chieu_id { get; set; }
         public Nullable<int> so_luong_ve { get; set; }
+        public Nullable<int> suatchieu_id { get; set; }
+        public Nullable<int> idtime { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CT_DichVu> CT_DichVu { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CT_Orders> CT_Orders { get; set; }
         public virtual KhachHang KhachHang { get; set; }
+        public virtual SuatChieu SuatChieu { get; set; }
         public virtual Phim Phim { get; set; }
         public virtual PhongChieu PhongChieu { get; set; }
     }

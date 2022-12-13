@@ -19,7 +19,7 @@ namespace BookingCinema.Areas.Admin.Controllers
         public ActionResult ListMovie(int? page)
         {
             int pageNumber = (page ?? 1);
-            int pageSize = 10;
+            int pageSize = 5;
             if (Session["Hoten"] == null)
             {
                 return RedirectToAction("Login", "Auth");

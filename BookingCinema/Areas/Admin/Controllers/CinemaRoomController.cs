@@ -19,7 +19,7 @@ namespace BookingCinema.Areas.Admin.Controllers
         public ActionResult ListCinema(int? page)
         {
             int pageNumber = (page ?? 1);
-            int pageSize = 7;
+            int pageSize = 9;
             if (Session["HoTen"] == null)
             {
                 return RedirectToAction("Login", "Auth");
@@ -153,7 +153,7 @@ namespace BookingCinema.Areas.Admin.Controllers
         public ActionResult ListCinemaRoom(int? page)
         {
             int pageNumber = (page ?? 1);
-            int pageSize = 7;
+            int pageSize = 9;
             if (Session["HoTen"] == null)
             {
                 return RedirectToAction("Login", "Auth");

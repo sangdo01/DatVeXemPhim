@@ -1,0 +1,738 @@
+﻿@model IEnumerable<BookingCinema.Models.GheNgoi>
+@{
+    ViewBag.Title = "BookSeat";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+
+.custom-button.transparent {
+  background: transparent;
+}
+
+.load-more {
+  margin-top: 30px;
+}
+
+
+.load-more .custom-button {
+  font-weight: 600;
+  padding: 10px 42px;
+  border: 1px solid #11326f;
+}
+
+/*Movie Schedule Starts Here*/
+.seat-plan-wrapper li {
+  padding: 0;
+  border-bottom: 1px solid #11326f;
+}
+
+.seat-plan-wrapper li:last-child {
+  border: none;
+}
+
+.seat-plan-wrapper li .movie-name {
+  padding: 30px;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  width: 45%;
+  border-right: 1px solid #11326f;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.seat-plan-wrapper li .movie-name .name {
+  margin-right: auto;
+  margin-left: 20px;
+  color: #dbe2fb;
+  text-transform: uppercase;
+}
+
+.seat-plan-wrapper li .movie-name .location-icon {
+  background-color: #17305f;
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  border-radius: 50%;
+  color: #9aace5;
+}
+
+.seat-plan-wrapper li .movie-name .icons {
+  color: #9aace5;
+}
+
+.seat-plan-wrapper li .movie-name .icons i {
+  animation-name: fadeIn;
+  -webkit-animation-name: fadeIn;
+  -moz-animation-name: fadeIn;
+  animation-duration: .4s;
+  -webkit-animation-duration: .4s;
+  -moz-animation-duration: .4s;
+  display: none;
+}
+
+.seat-plan-wrapper li .movie-name .icons i:first-child {
+  display: block;
+}
+
+.seat-plan-wrapper li .movie-schedule {
+  width: calc(100% - 45%);
+  padding: 30px;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  margin: -5px;
+}
+
+.seat-plan-wrapper li .movie-schedule .item {
+  color: #ffffff;
+  padding: 5px;
+  width: 70px;
+  background: #162f5f;
+  position: relative;
+  mask-position: center center;
+
+  text-align: center;
+  mask-image: url(./img/movie-seat.png);
+  -webkit-mask-image: url(./img/movie-seat.png);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+
+  mask-size: 100% 100%;
+  cursor: pointer;
+  -webkit-transition: all ease 0.3s;
+  transition: all ease 0.3s;
+  margin: 5px;
+}
+
+.seat-plan-wrapper li .movie-schedule .item:hover {
+  background: #31d7a9;
+}
+
+.seat-plan-wrapper li:hover .movie-name .icons i {
+  display: none;
+}
+
+.seat-plan-wrapper li:hover .movie-name .icons i:last-child {
+  display: block;
+  color: #f1481f;
+}
+
+.seat-plan-wrapper li:hover .movie-name .location-icon {
+  background: #31d7a9;
+  color: #ffffff;
+}
+
+
+  .seat-plan-wrapper li .movie-schedule {
+    width: 60%;
+  }
+}
+
+  .seat-plan-wrapper li .movie-name {
+    padding-bottom: 0;
+  }
+}
+
+/*Window Warning Starts Here*/
+.window-warning {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  overflow-y: scroll;
+  padding: 30px 15px;
+  z-index: 9999;
+  -webkit-transition: all ease 0.3s;
+  transition: all ease 0.3s;
+}
+
+.window-warning .lay {
+  position: fixed;
+  background: rgba(10, 30, 94, 0.9);
+  top: 0;
+  width: 100%;
+  height: 100%;
+  left: 0;
+}
+
+.window-warning .warning-item {
+  position: relative;
+  z-index: 1;
+  border-radius: 20px;
+  background: #ffffff;
+  width: 100%;
+  max-width: 560px;
+  padding: 60px 15px;
+  text-align: center;
+}
+
+
+.window-warning .warning-item .title {
+  color: #31d7a9;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-bottom: 32px;
+}
+
+.window-warning .warning-item .subtitle {
+  color: #0a1e5e;
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.window-warning .warning-item .thumb {
+  width: 192px;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 40px;
+}
+
+.window-warning .warning-item .thumb img {
+  max-width: 100%;
+}
+
+.window-warning .warning-item .seatPlanButton {
+  font-weight: 600;
+  padding: 11px 35px;
+  -webkit-box-shadow: 0px 10px 15px 0px rgba(59, 55, 188, 0.5);
+  box-shadow: 0px 10px 15px 0px rgba(59, 55, 188, 0.5);
+}
+
+.window-warning .warning-item .seatPlanButton i {
+  margin-left: 5px;
+}
+
+.window-warning::-webkit-scrollbar {
+  display: none;
+}
+
+.window-warning.inActive {
+  visibility: hidden;
+  opacity: 0;
+  z-index: -99;
+}
+
+/*Seat-Plan Starts Here*/
+.screen {
+  font-size: 28px;
+  margin: 0 auto 40px;
+  position: relative;
+  text-align: center;
+  max-width: 350px;
+  font-weight: 600;
+  text-transform: uppercase;
+  padding: 10px;
+}
+
+.screen::after, .screen::before {
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
+  height: 1px;
+  background: #213a69;
+}
+
+.screen::after {
+  width: 100%;
+  bottom: 0;
+}
+
+.screen::before {
+  width: 80%;
+  top: 0;
+}
+
+
+.screen-thumb {
+  width: 100%;
+  max-width: 730px;
+  margin: 0 auto 30px;
+}
+
+.screen-thumb img {
+  width: 100%;
+}
+
+
+.screen-area .subtitle {
+  margin: 0 auto 30px;
+  padding: 10px;
+  text-align: center;
+  position: relative;
+  text-align: center;
+  max-width: 350px;
+  font-weight: 600;
+  text-transform: uppercase;
+  padding: 10px;
+  color: #31d7a9;
+}
+
+.screen-area .subtitle::after, .screen-area .subtitle::before {
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
+  height: 1px;
+  background: #213a69;
+}
+
+.screen-area .subtitle::after {
+  width: 100%;
+  bottom: 0;
+}
+
+.screen-area .subtitle::before {
+  width: 80%;
+  top: 0;
+}
+
+
+
+.seat-area {
+  margin-bottom: 55px;
+  margin-top: -5px;
+}
+
+
+
+.seat-area .seat-line {
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  padding: 0;
+}
+
+.seat-area .seat-line>span {
+  width: 20px;
+}
+
+.seat-area .seat-line>span:last-child {
+  text-align: right;
+}
+
+.seat-area .seat-line ul {
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+  -ms-flex-pack: distribute;
+  justify-content: space-around;
+}
+
+.seat-area .seat-line ul .front-seat {
+  padding: 0;
+}
+
+.seat-area .seat-line ul .front-seat ul li {
+  padding: 5px;
+}
+
+.seat-area .seat-line ul.seat--area {
+  width: calc(100% - 40px);
+}
+
+
+
+  .seat-area .seat-line .single-seat img {
+    width: 100%;
+  }
+}
+
+.seat-area.couple {
+  margin-top: -10px;
+  margin-bottom: 70px;
+}
+
+
+
+.seat-area.couple .seat-line .single-seat {
+  padding: 10px;
+}
+
+
+.single-seat {
+  cursor: pointer;
+  position: relative;
+}
+
+.single-seat .sit-num {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  text-transform: uppercase;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.single-seat .sit-num:hover {
+  color: black;
+  font-weight: 700;
+}
+
+
+
+.single-seat:hover .sit-num {
+  /*display: none;*/
+  color: black;
+  font-weight: 700;
+}
+
+
+  .screen-wrapper .seat-area {
+    width: 800px;
+    margin-bottom: 10px;
+  }
+
+  .screen-wrapper::-webkit-scrollbar {
+    height: 3px;
+  }
+}
+
+.movie-facility {
+  overflow: hidden;
+}
+
+.proceed-to-book {
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  margin-bottom: -25px;
+  position: relative;
+  z-index: 1;
+}
+
+
+  .proceed-to-book .book-item span {
+    font-size: 14px;
+  }
+
+  .proceed-to-book .book-item .custom-button {
+    font-size: 14px;
+  }
+}
+
+.proceed-to-book .book-item {
+  margin-bottom: 25px;
+}
+
+.proceed-to-book .book-item span {
+  color: #ffffff;
+  text-transform: capitalize;
+  display: block;
+  margin-bottom: 14px;
+}
+
+.proceed-to-book .book-item .title {
+  color: #31d7a9;
+  text-transform: uppercase;
+}
+
+.proceed-to-book .book-item .custom-button {
+  padding: 8px 24px;
+}
+
+.proceed-book {
+  padding: 10px 40px 21px;
+  position: relative;
+}
+
+.proceed-book::before {
+  background-color: #050068;
+  opacity: 0.851;
+  width: 100%;
+  height: 100%;
+}
+
+
+    
+
+</style>
+
+
+<!-- ==========Banner-Section========== -->
+<section class="details-banner hero-area bg_img seat-plan-banner" style=" padding-top: 40px; padding-bottom: 30px;" @*data-background="../../images/movies/background/@ViewBag.tenphim.anhbackground"*@>
+    <div class="container">
+        <div class="details-banner-wrapper">
+            <div class="details-banner-content style-two">
+                @* <h3 class="title">@ViewBag.tenphim.ten_phim</h3>
+                    <div class="tags">
+                        <a>@ViewBag.tenphim.thoi_luong phút</a>
+                        <a>@ViewBag.tenphim.ngon_ngu</a>
+                    </div>*@
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ==========Movie-Section========== -->
+<div class="seat-plan-section padding-bottom">
+    <div class="container">
+        <div class="screen-area">
+
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                        <div class="item ">
+                            <input type="button" onclick="window.history.go(-1)" @*class="custom-button back-button"*@ class="btn search-hny mr-lg-3 mt-lg-0 mt-4" @*style="font-weight: 700; background-image: -webkit-linear-gradient( 169deg, #181e72 17%, #523a82 63%, #ef0d0da3 100%); "*@ style="background-color: #df0e62" value="Trở về">
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="item " style="text-align:center">
+                            @*<span style="font-size: 21px;">Tên phim:</span>*@ <a style="color:black; font-size: 24px; background: #df0e62;font-weight: 700;">
+                                @ViewBag.tenphim.ten_phim
+                            </a>
+                        </div>
+                        <div class="item">
+                            <a class="bookseat-taskbar">Giờ chiếu: @ViewBag.giochieu</a>
+                            <br />
+                            <a class="bookseat-taskbar">Ngày @Html.FormatValue(@ViewBag.ngaychieu, "{0:dd/MM/yyyy}")</a>
+                            <br />
+                            <a class="bookseat-taskbar">Thời lượng: @ViewBag.tenphim.thoi_luong phút</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+            <div class="page-title-area">
+                
+
+                
+            </div>
+            <h4 class="screen" style="font-size:20px">Màn hình</h4>
+            <div class="screen-thumb">
+                <img src="~/Frontend/Client/assets/images/seats/screen-thumb.png" style="width:70%;display:block; margin-left:auto;margin-right:auto" alt="movie">
+            </div>
+            <div class="screen-wrapper">
+                <ul class="seat-area" style="display: block; list-style-type: disc; margin-block-start: 1em; margin-block-end: 1em; margin-inline-start: 0px; margin-inline-end: 0px; padding-inline-start: 40px;">
+
+                    @{ var count = 0; }
+                    @foreach (var item in ViewBag.ghe)
+                    {
+                        if (item.cot == 1)
+                        {
+                            <li class="seat-line" style=" width: 80%; margin: auto;">
+                                <span>@item.hang</span>
+                                <ul class="seat--area" style="width: calc(70% - 60 px );">
+                                    @foreach (var it in Model.Where(m => m.hang == item.hang))
+                                    {
+                                        if (it.cot == 1)
+                                        {
+                                            <li class="front-seat">
+                                                <ul>
+                                                    @foreach (var seat3 in Model.Where(m => m.hang == item.hang))
+                                                    {
+
+                                                        { count = 0; }
+                                                        foreach (var igdd in ViewBag.idghedat)
+                                                        {
+                                                            if (seat3.id == igdd)
+                                                            {
+
+                                                                { count = 1; }
+
+                                                            }
+                                                        }
+
+                                                        if (count == 0)
+                                                        {
+                                                            <li class="single-seat seat-free-two UnAct" style="margin:0px" data-anh="@seat3.LoaiGhe.anh_loai_ghe" data-ten="@seat3.hang@seat3.cot" data-idghe="@seat3.id" id="@seat3.hang@seat3.cot" data-gia="@seat3.gia_ghe" data-phuthu="@seat3.LoaiGhe.phu_thu">
+                                                                <img src="~/images/seattype/@seat3.LoaiGhe.anh_loai_ghe" style="width:9%;display:block; margin-left:auto;margin-right:auto" alt="seat" class="ghe-@seat3.hang@seat3.cot">
+                                                                <span class="sit-num" style="font-size:12px">@seat3.hang@seat3.cot</span>
+                                                            </li>
+                                                        }
+                                                        else if (count == 1)
+                                                        {
+                                                            <li class="single-seat">
+                                                                @*<img src="/Frontend/Client/assets/images/movie/seat01.png" alt="seat">*@
+                                                                <img src="~/Frontend/Client/assets/images/seats/seat01.png" />
+                                                            </li>
+                                                        }
+
+
+                                                    }
+                                                </ul>
+                                            </li>
+                                        }
+
+                                    }
+
+                                </ul>
+                                <span>@item.hang</span>
+                            </li>
+                        }
+                    }
+
+                    <!---test-->
+                    <li class="seat-line" style=" width: 50%; margin: auto;">
+                        <ul class="seat--area" style="width: calc(70% - 60 px );margin-top:30px; margin-bottom:-50px">
+                            <li class="front-seat">
+                                <ul>
+
+                                    @*<li class="single-seat" style="margin:5px;text-align:center">
+                                    <img src="~/Frontend/Client/assets/images/movie/seat01.png" alt="seat" style="width:29px;height:27px">
+                                    <figure style="font-size:13px">Ghế đã được đặt</figure>
+                                </li>
+
+                                <li class="single-seat" style="margin:5px;text-align:center">
+                                    <img src="~/Frontend/Client/assets/images/movie/seat01-booked.png" alt="seat" style="width:29px;height:27px">
+                                    <figure style="font-size:13px">Ghế đang chọn</figure>
+                                </li>*@
+                                    @foreach (var loaig in ViewBag.loaighe)
+                                    {
+                                        <li class="single-seat" style="margin:5px;text-align:center">
+                                            <img src="~/images/seattype/@loaig.anh_loai_ghe" style="width:29px;height:27px" alt="seat">
+                                            <figure style="font-size:13px">@loaig.ten_ghe</figure>
+                                        </li>
+                                    }
+
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="proceed-book bg_img" @*data-background="/Frontend/Client/assets/images/movie/movie-bg-proceed.jpg"*@>
+            <div class="proceed-to-book">
+                <div class="book-item">
+                    <span>Ghế đã chọn:</span>
+                    <input type="text" style="width:500px" readonly class="title" id="tenghe" />
+                    <input type="hidden" style="width:500px" readonly class="title" id="idgheinput" />
+                    <input type="hidden" style="width:500px" readonly class="title" id="idtime" value="@ViewBag.idtime" />
+                    <input type="hidden" style="width:500px" readonly class="title" id="idsc" value="@ViewBag.idsc" />
+                </div>
+                <div class="book-item">
+                    <span>Tổng giá</span>
+                    <input type="hidden" readonly style="width:100px" class="title" id="giatien" value="0" />
+                    <a class="title" readonly style="width:100px;border: 0.5px solid groove;" id="giatienshow">0</a>
+                    VNĐ
+                </div>
+                <div class="book-item">
+                    <button @*href="@Url.Action("CheckOut","Movie", new { id = @ViewBag.idtime, idtime = @ViewBag.idsc})"*@ class="custom-button" style="background-color: #df0e62" id="checkout">Tiếp</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ==========Movie-Section========== -->
+
+
+@section Scripts
+{
+    <script>
+
+        $(document).ready(function () {
+            $('body').on('click', '.UnAct', function () {
+                var tenghe = $(this).data('ten');
+                var idghe = $(this).data('idghe');
+                //giá ghế
+                var giaghe = $(this).data('gia');
+                //giá phụ thu
+                var phuthu = $(this).data('phuthu');
+                // them ten ghe
+                $('#tenghe').val($('#tenghe').val() + tenghe + " ");
+                //them id ghe
+                if ($('#idgheinput').val() == "") {
+                    $('#idgheinput').val($('#idgheinput').val() + idghe);
+                }
+                else {
+                    $('#idgheinput').val($('#idgheinput').val() + "," + idghe);
+                }
+                var id = "#" + tenghe;
+                var imgid = "." + "ghe-" + tenghe;
+                $(imgid).attr("src", "/Frontend/Client/assets/images/seats/seat01-booked.png");
+                var tien = $('#giatien').val();
+                //giá ghế
+                var dongia = giaghe;
+                //cộng thêm phụ thu
+                var tongtien = parseInt(tien) + parseInt(dongia) + parseInt(phuthu);
+                function format1(n, currency) {
+                    return currency + n.toFixed(0).replace(/./g, function (c, i, a) {
+                        return i > 0 && c !== "." && (a.length - i) % 3 === 0 ? "." + c : c;
+                    });
+                }
+                $('#giatien').val(tongtien);
+                document.getElementById("giatienshow").textContent = format1(tongtien, "");
+                $(id).removeClass('UnAct').addClass('Act');
+            });
+
+            $('body').on('click', '.Act', function () {
+                var tenghe = $(this).data('ten');
+                var idghen = $(this).data('idghe');
+                //giá ghế
+                var giaghe = $(this).data('gia');
+                //giá phụ thu
+                var phuthu = $(this).data('phuthu');
+                dataval = $('#tenghe').val();
+                dataidghe = $('#idgheinput').val();
+
+                var check = ",";
+                if (dataidghe.indexOf(check) != -1) {
+                    if (dataidghe.indexOf("," + idghen) != -1) {
+                        var idghedadat = dataidghe.replace("," + idghen, '');
+                    }
+                    else {
+                        var idghedadat = dataidghe.replace(idghen + ",", '');
+                    }
+                }
+                else {
+                    var idghedadat = dataidghe.replace(idghen, '');
+                }
+
+                // sửa tên ghế
+                let ghedadat = dataval.replace(tenghe + " ", '');
+                $('#tenghe').val(ghedadat);
+                $('#idgheinput').val(idghedadat);
+                var imgid = "." + "ghe-" + tenghe;
+                var anh = $(this).data('anh');
+                var link = "/images/seattype/" + anh;
+                $(imgid).attr("src", link);
+                var id = "#" + tenghe;
+
+
+                $(id).removeClass('Act').addClass('UnAct');
+                var tien = $('#giatien').val();
+                var dongia = giaghe;
+                var tongtien = parseInt(tien) - parseInt(dongia) - parseInt(phuthu);
+                function format1(n, currency) {
+                    return currency + n.toFixed(0).replace(/./g, function (c, i, a) {
+                        return i > 0 && c !== "." && (a.length - i) % 3 === 0 ? "." + c : c;
+                    });
+                }
+                $('#giatien').val(tongtien);
+                document.getElementById("giatienshow").textContent = format1(tongtien, "");
+            });
+
+            $('body').on('click', '#checkout', function () {
+                var idg = $('#idgheinput').val();
+                var idtime = $('#idtime').val();
+                var idsc = $('#idsc').val();
+                window.location.href = '/Movie/CheckOut/' + idsc + '?idtime=' + idtime + '&idg=' + idg;
+            });
+        });
+
+    </script>
+
+}

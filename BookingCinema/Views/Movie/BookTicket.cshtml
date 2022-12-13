@@ -4,4 +4,290 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<style>
+    .seat-plan-wrapper li .movie-schedule {
+        justify-content: normal;
+        padding: 20px 0px 20px 15px;
+    }
+</style>
 
+<section class="details-banner bg_img"
+         style="display: block; height: 190px; width: contain; background-image: url(../../images/banner/@ViewBag.tenphim.Banner)">
+</section>
+
+<div class="container" style="margin-top: 30px; margin-bottom: 40px; text-align:center">
+    <div class="details-banner-wrapper">
+        <div class="details-banner-content style-two">
+            <h3 class="title" style="color: #df0e62">@ViewBag.tenphim.ten_phim</h3>
+            <div class="tags">
+                <a>@ViewBag.tenphim.thoi_luong phút</a>
+                <a>@ViewBag.tenphim.NgonNgu</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="page-title bg-one" style="padding: 15px 0px">
+    <div class="container">
+        <div class="page-title-area">
+            <div class="item md-order-1">
+                <input style="background-color: #df0e62" type="button" onclick="window.history.go(-1)" @*class="custom-button back-button"*@ class="btn search-hny mr-lg-3 mt-lg-0 mt-4" value="Trở về">
+            </div>
+            <div class="item date-item" style="text-align:center; font-size: 35px">
+                <div class="tags">
+                    <a class="bookseat-taskbar">Hãy chọn vị trí và thời gian !</a>
+                </div>
+            </div>
+            <div class="item">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ==========Movie-Section========== -->
+@*<div class="ticket-plan-section padding-bottom " style="padding-top:30px">*@
+<section class="book-section bg-one" @*style="background-image: -webkit-linear-gradient( 271deg,#01172c,#01172c,#01172c); padding: 20px 0; border-top: 1px solid #01172c; border-bottom: 1px solid #01172c; "*@>
+    <div class="container">
+        <div class="row">
+
+            <form class="ticket-search-form two" style="justify-content: space-evenly;">
+                <div class="col">
+                    <div class="form-group">
+                        <div class="thumb">
+                            <img src="~/template/client/assets/images/ticket/date.png" alt="ngày chiếu">
+                        </div>
+                        <span class="type" style="margin-right: 40px">Ngày</span>
+
+                        <select class="select-bar showdate" id="showdate">
+
+                            @foreach (var date in ViewBag.date)
+                            {
+
+                                <option>@Html.FormatValue(@date, "{0:dddd, dd/MM/yyyy}")</option>
+
+                            }
+                        </select>
+
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group" style="padding-right:100px">
+                        <div class="thumb">
+                            <img src="~/template/client/assets/images/ticket/cinema.png" alt="ticket" />
+                        </div>
+                        <span class="type" style="margin-right: 40px">Rạp Phim</span>
+                        <select class="select-bar showcinema" id="showcinema">
+                            <option value="0">Chọn rạp phim</option>
+                            @foreach (var rap in ViewBag.rap)
+                            {
+
+                                <option value="@rap.ten_rap">@rap.ten_rap</option>
+
+                            }
+                        </select>
+                    </div>
+                </div>
+
+
+
+
+
+
+
+            </form>
+        </div>
+
+
+    </div>
+</section>
+<div class="ticket-plan-section padding-bottom padding-top" style=" padding-top: 60px;">
+    <div class="container">
+        <span style="display:none" id="idphim">@ViewBag.idphim</span>
+        <div class="row justify-content-center">
+            <div class="col-lg-9 mb-5 mb-lg-0">
+                <ul class="seat-plan-wrapper bg-five" id="thisTime">
+                </ul>
+
+            </div>
+            @*<div class="col-lg-3 col-md-6 col-sm-10">
+                    <div class="widget-1 widget-banner">
+                        <div class="widget-1-body">
+                            <a href="#0">
+                                <img src="/Frontend/Client/assets/images/sidebar/banner/banner03.jpg" alt="banner">
+                            </a>
+                        </div>
+                    </div>
+                </div>*@
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal E-->
+
+<section class="window-warning inActive" id="modalseat">
+    <div class="lay"></div>
+    <div class="warning-item">
+        <h6 class="subtitle">Xin chào bạn! </h6>
+        <h4 class="title">Vui lòng chọn ghế !</h4>
+        <div class="thumb">
+            @*<img src="~/template/client/assets/images/ticket/seat-plan.png" alt="movie">*@
+        </div>
+        <div id="Seat"></div>
+    </div>
+</section>
+@*Form*@
+<form action="/Movie/CheckSeat" method="post" style="display:none" id="formcheckseat">
+    <input type="text" name="giochieu" id="giochieu" value="0" />
+    <input type="text" name="suatchieu" id="suatchieu" value="0" />
+</form>
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            var idsuatchieu = $(".showdate .current").text();
+            var idp = $("#idphim").text();
+            loadTime(idsuatchieu, idp);
+            //Hiển thị suất chiếu theo ngày chiếu
+            $('#showdate').change(function () {
+                var idsuat = $("#showdate option:selected").text();
+                var idfilm = $("#idphim").text();
+                loadTime(idsuat, idfilm);
+            });
+
+            $('#showcinema').change(function () {
+                var idsuat = $("#showdate option:selected").text();
+                var idfilm = $("#idphim").text();
+                loadTime(idsuat, idfilm);
+            });
+            // Load suất chiếu
+            function loadTime(ids, idf) {
+                $.ajax({
+                    url: '/Movie/ShowTime/',
+                    type: 'GET',
+                    data: {
+                        ngay: ids,
+                        idphim: idf,
+
+                    },
+                    success: function (res) {
+                        if (res.Count != null) {
+                            var time = res.times;
+                            var idschieu = res.idsc;
+                            var idtimes = res.idtimes;
+                            var rapphim = res.tenrap;
+                            var tenrap = $("#showcinema option:selected").val();
+                            var dem = 0;
+                            var html = "";
+                            html += "";
+                            for (let i = 0; i < res.Count; i++) {
+                                //Hàm if xuất các suất chiếu theo tên rạp được chọn từ select list
+                                if (rapphim[i + 1] == tenrap || rapphim[i] == tenrap)   // Vì rapphim[0] là dấu - nên phải so sánh i+1 trước để né dấu - 
+                                                                                        // Rồi so tiếp với rapphim[i]
+                                {
+                                    if (i < res.Count - 1) {
+                                        if (time[i] == "-") {
+                                            html += "<li >";
+                                            html += "<div class='movie-name col-lg-5'>";
+                                            html += "<a href='#0' class='name'>";
+                                            html += rapphim[i + 1];
+                                            html += "</a>";
+                                            html += "<div class='location-icon'>";
+                                            html += "<i class='fas fa-map-marker-alt'></i></div></div>";
+                                            html += "<div class='movie-schedule' >";
+
+                                        }
+                                        else {
+                                            const hms = time[i];
+                                            const [hours, minutes, seconds] = hms.split(':');
+                                            const timefinal = (hours) + ":" + (minutes);
+                                            html += "<div class='item' style = 'margin: 10px;float:left' data-id = '" + idtimes[i] + "' data-sc = '" + idschieu[i] + "'> ";
+                                            html += timefinal;
+                                            html += "</div>";
+
+                                        }
+                                        if (time[i + 1] == "-") {
+                                            html += "</div></li >";
+                                        }
+                                        dem++;
+                                    }
+                                }
+                                //nếu select list để mặc định thì xuất ra tất cả rạp phim có suất chiếu theo ngày, mặc định thì value = 0
+                                else if (tenrap == 0) {
+                                    if (i < res.Count - 1) {
+                                        if (time[i] == "-") {
+                                            html += "<li >";
+                                            html += "<div class='movie-name col-lg-5'>";
+                                            html += "<a href='#0' class='name'>";
+                                            html += rapphim[i + 1];
+                                            html += "</a>";
+                                            html += "<div class='location-icon'>";
+                                            html += "<i class='fas fa-map-marker-alt'></i></div></div>";
+                                            html += "<div class='movie-schedule' >";
+
+                                        }
+                                        else {
+                                            const hms = time[i];
+                                            const [hours, minutes, seconds] = hms.split(':');
+                                            const timefinal = (hours) + ":" + (minutes);
+                                            html += "<div class='item' style = 'margin: 10px;float:left' data-id = '" + idtimes[i] + "' data-sc = '" + idschieu[i] + "'> ";
+                                            html += timefinal;
+                                            html += "</div>";
+
+                                        }
+                                        if (time[i + 1] == "-") {
+                                            html += "</div></li >";
+                                        }
+                                        dem++;
+                                    }
+                                }
+                                 
+                            }
+                            //Nếu biến dem = 0 thì không có xuất chiếu nào.
+                            if (dem == 0) {
+                                html += "<p style='text-align:center'>Rạp <strong>" + tenrap + " </strong> đã hết suất chiếu, quý khách vui lòng chọn ngày khác !</p>";
+                                
+                            }
+                            $('#thisTime').html(html);
+
+                        }
+                    }
+                });
+            }
+
+            //Click vào suất chiếu
+            $('body').on('click', '.item', function () {
+                var idsc = $(this).data('sc');
+                var idtime = $(this).data('id');
+                //truyền input cho checkseat
+                $("#giochieu").val(idtime);
+                $("#suatchieu").val(idsc);
+                var htmls = "";
+                htmls += "<a href='/Movie/BookSeat?idd=" + idsc + "&idtimee=" + idtime + "' class='custom-button seatPlanButton'>";
+                //htmls += "<a class='custom-button seatPlanButton submitcheck'>";
+                htmls += "Chọn ghế";
+                htmls += "<i class='fas fa-angle-right'></i></a>";
+                $('#Seat').html(htmls);
+                sleep(100);
+
+                $("#modalseat").removeClass("inActive").addClass("Active");
+            });
+
+            //Sleep
+            function sleep(milliseconds) {
+                const date = Date.now();
+                let currentDate = null;
+                do {
+                    currentDate = Date.now();
+                } while (currentDate - date < milliseconds);
+            }
+            //submit checkseat
+            $('body').on('click', '.submitcheck', function () {
+                $('#formcheckseat').submit();
+            });
+
+
+        });
+    </script>
+
+}

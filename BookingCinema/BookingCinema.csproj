@@ -139,12 +139,17 @@
     <Compile Include="Areas\Admin\Controllers\AdminController.cs" />
     <Compile Include="Areas\Admin\Controllers\AuthController.cs" />
     <Compile Include="Areas\Admin\Controllers\CinemaRoomController.cs" />
+    <Compile Include="Areas\Admin\Controllers\FeedBackController.cs" />
     <Compile Include="Areas\Admin\Controllers\MovieController.cs" />
+    <Compile Include="Areas\Admin\Controllers\NewsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\OrdersController.cs" />
     <Compile Include="Areas\Admin\Controllers\ShowTimeController.cs" />
+    <Compile Include="Areas\Admin\Controllers\UserController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InformationController.cs" />
     <Compile Include="Controllers\MovieController.cs" />
     <Compile Include="Controllers\NewsController.cs" />
+    <Compile Include="Controllers\ReceptionPaymentController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Extensions\NotificationExtensions.cs" />
     <Compile Include="Global.asax.cs">
@@ -240,6 +245,10 @@
     <Content Include="Content\toastr.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Frontend\Client\assets\images\payment\storrreee.png" />
+    <Content Include="Frontend\Client\assets\images\seats\screen-thumb.png" />
+    <Content Include="Frontend\Client\assets\images\seats\seat01-booked.png" />
+    <Content Include="Frontend\Client\assets\images\seats\seat01.png" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="images\about\about-5.png" />
@@ -331,13 +340,6 @@
     <Content Include="Areas\Admin\Views\CinemaRoom\EditCinema.cshtml" />
     <Content Include="Areas\Admin\Views\CinemaRoom\ListCinemaRoom.cshtml" />
     <Content Include="Areas\Admin\Views\CinemaRoom\CreateCinemaRoom.cshtml" />
-    <EntityDeploy Include="Models\DatVeXemPhim.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>DatVeXemPhim.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\DatVeXemPhim.edmx.diagram">
-      <DependentUpon>DatVeXemPhim.edmx</DependentUpon>
-    </Content>
     <Content Include="Areas\Admin\Views\CinemaRoom\EditCinemaRoom.cshtml" />
     <Content Include="Areas\Admin\Views\CinemaRoom\SeatRoom.cshtml" />
     <Content Include="Areas\Admin\Views\CinemaRoom\ListSeatType.cshtml" />
@@ -347,6 +349,25 @@
     <Content Include="Areas\Admin\Views\ShowTime\ListKhungGio.cshtml" />
     <Content Include="Areas\Admin\Views\ShowTime\CreateKhungGio.cshtml" />
     <Content Include="Areas\Admin\Views\ShowTime\EditKhungGio.cshtml" />
+    <Content Include="Areas\Admin\Views\ShowTime\CreateSuatChieu.cshtml" />
+    <Content Include="Areas\Admin\Views\ShowTime\EditSuatChieu.cshtml" />
+    <Content Include="Areas\Admin\Views\User\ListUser.cshtml" />
+    <Content Include="Areas\Admin\Views\User\ListKH.cshtml" />
+    <Content Include="Areas\Admin\Views\User\CreateUser.cshtml" />
+    <Content Include="Areas\Admin\Views\User\EditUser.cshtml" />
+    <Content Include="Areas\Admin\Views\FeedBack\ListFeedback.cshtml" />
+    <Content Include="Areas\Admin\Views\News\ListNews.cshtml" />
+    <Content Include="Areas\Admin\Views\News\CreateNews.cshtml" />
+    <Content Include="Areas\Admin\Views\News\EditNews.cshtml" />
+    <Content Include="Areas\Admin\Views\Orders\ListOrders.cshtml" />
+    <Content Include="Areas\Admin\Views\Orders\OrdDetail.cshtml" />
+    <EntityDeploy Include="Models\DatVeXemPhim.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>DatVeXemPhim.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\DatVeXemPhim.edmx.diagram">
+      <DependentUpon>DatVeXemPhim.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -823,6 +844,9 @@
     <Content Include="template\client\assets\css\ticket-booking.css" />
     <Content Include="template\client\assets\css\ulli.css" />
     <Content Include="template\client\assets\fonts\fontawesome-webfont.svg" />
+    <Content Include="template\client\assets\images\ticket\cinema.png" />
+    <Content Include="template\client\assets\images\ticket\date.png" />
+    <Content Include="template\client\assets\images\ticket\seat-plan.png" />
     <Content Include="template\client\assets\js\all.js" />
     <Content Include="template\client\assets\js\app.js" />
     <Content Include="template\client\assets\js\as-alert-message.min.js" />
@@ -943,18 +967,20 @@
     <Content Include="Views\User\Login.cshtml" />
     <Content Include="Views\Shared\_Notifications.cshtml" />
     <Content Include="Views\User\Register.cshtml" />
-    <Content Include="Views\Movie\BookTicket.cshtml" />
     <Content Include="template\admin\ckeditor\.htaccess" />
     <Content Include="template\admin\ckeditor\_samples\adobeair\run.bat" />
     <Content Include="template\admin\ckeditor\_samples\adobeair\run.sh" />
     <Content Include="template\admin\ckeditor\_samples\assets\output_for_flash.fla" />
     <Content Include="template\admin\status\css\toastr.js.map" />
+    <Content Include="Views\Movie\BookTicket.cshtml" />
+    <Content Include="Views\Movie\BookSeat.cshtml" />
+    <Content Include="Views\Movie\CheckOut.cshtml" />
+    <Content Include="Views\ReceptionPayment\Success.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="template\admin\assets\libs\" />
-    <Folder Include="template\client\assets\images\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
