@@ -115,7 +115,6 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="timeid" Type="int" />
           <Property Name="ngay_mua" Type="datetime" />
           <Property Name="tong_tien" Type="decimal" Precision="18" Scale="0" />
           <Property Name="phuong_thuc_thanh_toan" Type="nvarchar(max)" />
@@ -681,7 +680,6 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="timeid" Type="Int32" />
           <Property Name="ngay_mua" Type="DateTime" Precision="3" />
           <Property Name="tong_tien" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="phuong_thuc_thanh_toan" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
@@ -1263,7 +1261,6 @@
             <EntityTypeMapping TypeName="DatVeXemPhimModel.Order">
               <MappingFragment StoreEntitySet="Orders">
                 <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="timeid" ColumnName="timeid" />
                 <ScalarProperty Name="ngay_mua" ColumnName="ngay_mua" />
                 <ScalarProperty Name="tong_tien" ColumnName="tong_tien" />
                 <ScalarProperty Name="phuong_thuc_thanh_toan" ColumnName="phuong_thuc_thanh_toan" />

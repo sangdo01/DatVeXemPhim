@@ -91,7 +91,7 @@
 
                                                     @{var it = db.KhungGios.Find(item.id);}
                                                     <td>
-                                                        @Html.FormatValue(@item.SuatChieu.ngay_chieu, "{0:dd/MM/yyyy}") - @(it.ThoiGian)
+                                                        @Html.FormatValue(@item.SuatChieu.ngay_chieu, "{0:dd/MM/yyyy}") @*- @(it.ThoiGian)*@
                                                     </td>
                                                     <td>
                                                         @Html.Raw(String.Format("{0:0,0} đ", @item.tong_tien))

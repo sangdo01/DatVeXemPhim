@@ -81,7 +81,7 @@
                                                     @{ var gio = db.KhungGios.Find(Model.id);}
                                                     <tr>
                                                         <td class="text-main text-bold" style="font-weight:bold"> Lịch chiếu:</td>
-                                                        <td class="text-center">@Html.FormatValue(@Model.SuatChieu.ngay_chieu, "{0:dd/MM/yyyy}") - @gio.ThoiGian</td>
+                                                        <td class="text-center">@Html.FormatValue(@Model.SuatChieu.ngay_chieu, "{0:dd/MM/yyyy}") @*- @gio.ThoiGian*@</td>
                                                     </tr>
                                                 </tbody>
                                             </table>

@@ -22,7 +22,6 @@ namespace BookingCinema.Models
         }
     
         public int id { get; set; }
-        public Nullable<int> timeid { get; set; }
         public Nullable<System.DateTime> ngay_mua { get; set; }
         public Nullable<decimal> tong_tien { get; set; }
         public string phuong_thuc_thanh_toan { get; set; }
